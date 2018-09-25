@@ -26,6 +26,9 @@ program
       setProperty(properties, k, v);
     });
   })
+  .option("--file-pattern", "filePattern", /\S+/, "*.js")
+  .option("--message", "message", /.+/, "a commit message")
+  .argument("exec", "process to pipe content through")
   .argument("[repos...]", "repos to merge")
   .action(async (args, options, logger) => {
     try {
@@ -41,10 +44,43 @@ program
       });
 
       for (const repo of args.repos) {
-        console.log(repo);
+        const branch = await aggregationProvider.branch(repo);
+
+        const changedFiles = [];
+
+        for await (const entry of branch.list([options.filePattern])) {
+          const [pe, ...pa] = args.exec.split(/\s+/);
+          console.log(
+            `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
+          );
+
+          const content = branch.content(entry.path);
+
+          const ea = execa.stdout(pe, pa, { input: content.content });
+
+          changedFiles.push({ path: entry.path, content: ea.stdout });
+        }
+
+        if (changedFiles.length > 0) {
+          const prBranch = await branch.repository.createBranch(
+            "mkpr-1",
+            branch
+          );
+
+          await prBranch.commit(options.message, changedFiles);
+
+          const pullRequest = await branch.createPullRequest(prBranch, {
+            title: `mkpr ${options.filePattern} ${args.exec}`
+          });
+
+          logger.info(pullRequest.name);
+        } else {
+          process.exit(1);
+        }
       }
     } catch (err) {
       logger.error(err);
+      process.exit(-1);
     }
   });
 
