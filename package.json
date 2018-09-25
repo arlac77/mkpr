@@ -1,0 +1,8 @@
+{
+  "name": "mkpr",
+  "description": "create pull request by streaming content through a filter",
+  "module": "src/mkpr.js",
+  "bin": {
+    "mkpr": "bin/mkpr"
+  }
+}
