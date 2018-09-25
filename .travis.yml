@@ -9,9 +9,6 @@ branches:
 cache:
   directories:
     - node_modules
-notifications:
-  email:
-    - '-markus.felten@gmx.de'
 before_install:
   - npm i -g npm@latest
 before_script:
