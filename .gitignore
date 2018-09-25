@@ -1,5 +1,4 @@
 node_modules
-bin
 build
 dist
 *.log
@@ -8,3 +7,5 @@ dist
 .nyc_output
 .test
 .tmp
+
+bin
