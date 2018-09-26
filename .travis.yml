@@ -23,3 +23,6 @@ after_script:
   - cat ./build/coverage/lcov.info | coveralls
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
+notifications:
+  email:
+    - '-markus.felten@gmx.de'
