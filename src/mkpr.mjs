@@ -26,7 +26,7 @@ program
       setProperty(properties, k, v);
     });
   })
-  .option("--file-pattern", "filePattern", /\S+/, "*.js")
+  .option("--files", "files", /\S+/, "*.js")
   .option("--message", "message", /.+/, "a commit message")
   .argument("exec", "process to pipe content through")
   .argument("[repos...]", "repos to merge")
@@ -48,7 +48,7 @@ program
 
         const changedFiles = [];
 
-        for await (const entry of branch.list([options.filePattern])) {
+        for await (const entry of branch.list([options.files])) {
           const [pe, ...pa] = args.exec.split(/\s+/);
           console.log(
             `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`

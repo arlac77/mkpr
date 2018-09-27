@@ -4,8 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/index.js",
-  "module": "src/mkpr.js",
+  "module": "src/mkpr.mjs",
   "description": "create pull request by streaming content through a filter",
   "keywords": [
     "npm-package-template"
@@ -27,8 +26,8 @@
     "pretest": "rollup -c tests/rollup.config.js",
     "posttest": "npm run prepare && markdown-doctest",
     "prepare": "rollup -c",
-    "docs": "documentation readme src/mkpr.js --section=API",
-    "lint": "documentation lint src/mkpr.js",
+    "docs": "documentation readme src/mkpr.mjs --section=API",
+    "lint": "documentation lint src/mkpr.mjs",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
@@ -80,8 +79,8 @@
   },
   "nyc": {
     "include": [
-      "build/*-test.js",
-      "src/**/*.js"
+      "build/*-test.mjs",
+      "src/**/*.mjs"
     ],
     "reporter": [
       "lcov",
