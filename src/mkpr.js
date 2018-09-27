@@ -75,6 +75,8 @@ program
 
           logger.info(pullRequest.name);
         } else {
+          logger.info('no matching files');
+
           process.exit(1);
         }
       }
