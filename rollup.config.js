@@ -12,7 +12,7 @@ export default Object.keys(pkg.bin).map(name => {
       file: pkg.bin[name],
       format: "cjs",
       banner:
-        "#!/usr/bin/env -S node --experimental-modules --experimental-worker",
+        "#!/usr/bin/env node --experimental-modules --experimental-worker",
       interop: false
     },
     external: [
