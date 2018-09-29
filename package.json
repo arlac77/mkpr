@@ -39,7 +39,8 @@
     "github-repository-provider": "^4.0.5",
     "local-repository-provider": "^3.0.3",
     "repository-provider": "^5.2.0",
-    "semver": "^5.5.1"
+    "semver": "^5.5.1",
+    "stream-buffers": "^3.0.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.1.0",

@@ -1,9 +1,11 @@
 import { version, engines } from "../package.json";
+import { Content } from "repository-provider";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { satisfies } from "semver";
 import execa from "execa";
+import {WritableStreamBuffer } from 'stream-buffers';
 
 const program = require("caporal");
 
@@ -54,11 +56,16 @@ program
             `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
           );
 
-          const content = branch.content(entry.path);
+          const original = branch.content(entry.path);
+          const output = new WritableStreamBuffer();
 
-          const ea = execa.stdout(pe, pa, { input: content.content });
+          const ea = execa.stdout(pe, pa, { input: original.content,  output });
 
-          changedFiles.push({ path: entry.path, content: ea.stdout });
+          const modified = new Content(entry.path, output);
+
+          if(!modified.equals(original)) {
+            changedFiles.push(modified);
+          }
         }
 
         if (changedFiles.length > 0) {
