@@ -38,7 +38,7 @@
     "execa": "^1.0.0",
     "github-repository-provider": "^4.0.7",
     "local-repository-provider": "^3.0.5",
-    "repository-provider": "^5.2.2",
+    "repository-provider": "^5.2.3",
     "semver": "^5.5.1",
     "stream-buffers": "^3.0.2"
   },
