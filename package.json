@@ -33,11 +33,11 @@
     "travis-deploy-once": "travis-deploy-once"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.0.21",
+    "aggregation-repository-provider": "^2.0.22",
     "caporal": "^0.10.0",
     "execa": "^1.0.0",
-    "github-repository-provider": "^4.0.7",
-    "local-repository-provider": "^3.0.5",
+    "github-repository-provider": "^4.0.11",
+    "local-repository-provider": "^3.0.7",
     "repository-provider": "^5.2.4",
     "semver": "^5.5.1",
     "stream-buffers": "^3.0.2"
