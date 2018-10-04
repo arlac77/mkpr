@@ -56,14 +56,12 @@ program
             `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
           );
 
-          const original = branch.content(entry.path);
-          const output = new WritableStreamBuffer();
-
-          const ea = execa.stdout(pe, pa, { input: original.content,  output });
+          const original = await branch.content(entry.path);
+          const output = await execa.stdout(pe, pa, { input: original.content });
 
           const modified = new Content(entry.path, output);
 
-          if(!modified.equals(original)) {
+          if(!original.equals(modified)) {
             changedFiles.push(modified);
           }
         }
