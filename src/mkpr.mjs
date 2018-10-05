@@ -47,47 +47,51 @@ program
       for (const repo of args.repos) {
         const branch = await aggregationProvider.branch(repo);
 
-        const changedFiles = [];
-
-        for await (const entry of branch.list([options.files])) {
-          const [pe, ...pa] = args.exec.split(/\s+/);
-          console.log(
-            `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
-          );
-
-          const original = await branch.content(entry.path);
-          const output = await execa.stdout(pe, pa, {
-            input: original.content
-          });
-
-          const modified = new Content(entry.path, output);
-
-          if (!original.equals(modified)) {
-            changedFiles.push(modified);
-          }
-        }
-
-        if (changedFiles.length > 0) {
-          const prBranch = await branch.repository.createBranch(
-            "mkpr-1",
-            branch
-          );
-
-          await prBranch.commit(options.message, changedFiles);
-
-          const pullRequest = await branch.createPullRequest(prBranch, {
-            title: `mkpr ${options.filePattern} ${args.exec}`
-          });
-
-          logger.info(pullRequest.name);
+        if (branch === undefined) {
+          logger.info("no such branch `${repo}`");
         } else {
-          logger.info("no matching files");
+          const changedFiles = [];
 
-          process.exit(1);
+          for await (const entry of branch.list([options.files])) {
+            const [pe, ...pa] = args.exec.split(/\s+/);
+            console.log(
+              `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
+            );
+
+            const original = await branch.content(entry.path);
+            const output = await execa.stdout(pe, pa, {
+              input: original.content
+            });
+
+            const modified = new Content(entry.path, output);
+
+            if (!original.equals(modified)) {
+              changedFiles.push(modified);
+            }
+          }
+
+          if (changedFiles.length > 0) {
+            const prBranch = await branch.repository.createBranch(
+              "mkpr-1",
+              branch
+            );
+
+            await prBranch.commit(options.message, changedFiles);
+
+            const pullRequest = await branch.createPullRequest(prBranch, {
+              title: `mkpr ${options.filePattern} ${args.exec}`
+            });
+
+            logger.info(pullRequest.name);
+          } else {
+            logger.info("no matching files");
+
+            process.exit(1);
+          }
         }
       }
     } catch (err) {
-      logger.error(err);
+      logger.info(err);
       process.exit(-1);
     }
   });

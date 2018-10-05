@@ -4,8 +4,10 @@ import { join } from "path";
 
 test("cli", async t => {
   const p = await execa(join(__dirname, "..", "bin", "mkpr"), [
+    "--files",
+    "package.json",
     "sed s/8.11/8.12/",
-    "arlac77/template-sync-test"
+    "arlac77/sync-test-repository"
   ]);
   t.is(p.code, 0);
 });
