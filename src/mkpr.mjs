@@ -5,7 +5,6 @@ import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { satisfies } from "semver";
 import execa from "execa";
-import {WritableStreamBuffer } from 'stream-buffers';
 
 const program = require("caporal");
 
@@ -57,11 +56,13 @@ program
           );
 
           const original = await branch.content(entry.path);
-          const output = await execa.stdout(pe, pa, { input: original.content });
+          const output = await execa.stdout(pe, pa, {
+            input: original.content
+          });
 
           const modified = new Content(entry.path, output);
 
-          if(!original.equals(modified)) {
+          if (!original.equals(modified)) {
             changedFiles.push(modified);
           }
         }
@@ -80,7 +81,7 @@ program
 
           logger.info(pullRequest.name);
         } else {
-          logger.info('no matching files');
+          logger.info("no matching files");
 
           process.exit(1);
         }
