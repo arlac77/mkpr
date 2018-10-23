@@ -71,10 +71,7 @@ program
           }
 
           if (changedFiles.length > 0) {
-            const prBranch = await branch.repository.createBranch(
-              "mkpr-1",
-              branch
-            );
+            const prBranch = await branch.createBranch("mkpr-1");
 
             await prBranch.commit(options.message, changedFiles);
 
