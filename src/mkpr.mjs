@@ -82,7 +82,7 @@ program
               title: `mkpr ${options.filePattern} ${args.exec}`
             });
 
-            logger.info(pullRequest.name);
+            logger.info(pullRequest);
           } else {
             logger.info("no matching files");
 
