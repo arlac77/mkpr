@@ -54,7 +54,7 @@ program
 
           for await (const entry of branch.list([options.files])) {
             const [pe, ...pa] = args.exec.split(/\s+/);
-            console.log(
+            logger.info(
               `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
             );
 
