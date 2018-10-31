@@ -36,7 +36,7 @@
     "aggregation-repository-provider": "^2.0.33",
     "caporal": "^0.10.0",
     "execa": "^1.0.0",
-    "github-repository-provider": "^4.0.31",
+    "github-repository-provider": "^4.0.32",
     "local-repository-provider": "^3.1.12",
     "repository-provider": "^6.1.0",
     "semver": "^5.6.0"
