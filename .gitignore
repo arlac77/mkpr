@@ -1,6 +1,7 @@
 node_modules
 build
 dist
+bin
 *.log
 *.dump
 .DS_Store
