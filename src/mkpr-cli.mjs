@@ -5,8 +5,7 @@ import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { satisfies } from "semver";
 import execa from "execa";
-
-const program = require("caporal");
+import program from "caporal";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
@@ -52,8 +51,9 @@ program
         } else {
           const changedFiles = [];
 
+          const [pe, ...pa] = args.exec.split(/\s+/);
+
           for await (const entry of branch.list([options.files])) {
-            const [pe, ...pa] = args.exec.split(/\s+/);
             logger.info(
               `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
             );

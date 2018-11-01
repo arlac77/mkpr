@@ -8,7 +8,7 @@ import pkg from "./package.json";
 
 export default Object.keys(pkg.bin).map(name => {
   return {
-    input: `src/${name}.mjs`,
+    input: `src/${name}-cli.mjs`,
     output: {
       file: pkg.bin[name],
       format: "cjs",
@@ -29,7 +29,14 @@ export default Object.keys(pkg.bin).map(name => {
       "events",
       "assert",
       "os",
-      "child_process"
+      "child_process",
+      "caporal",
+      "repository-provider",
+      "github-repository-provider",
+      "local-repository-provider",
+      "aggregation-repository-provider",
+      "semver",
+      "execa"
     ],
     plugins: [
       babel({
@@ -48,7 +55,6 @@ export default Object.keys(pkg.bin).map(name => {
         ],
         exclude: "node_modules/**"
       }),
-      resolve(),
       commonjs(),
       json({
         include: "package.json",
