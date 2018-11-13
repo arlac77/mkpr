@@ -40,7 +40,6 @@
     "semver": "^5.6.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.1.5",
     "ava": "^1.0.0-rc.2",
     "documentation": "^8.1.2",
     "markdown-doctest": "^0.9.1",
@@ -69,17 +68,16 @@
   "homepage": "https://github.com/arlac77/mkpr#readme",
   "ava": {
     "files": [
-      "build/*-test.js"
+      "tests/*-test.js"
     ],
     "presets": [
       "env"
     ],
     "require": [
-      "babel-register"
-    ]
-  },
-  "xo": {
-    "space": true
+      "esm"
+    ],
+    "babel": false,
+    "compileEnhancements": false
   },
   "template": {
     "repository": {
