@@ -15,7 +15,7 @@ const properties = {};
 program
   .description("Create pull request by streaming content through a filter")
   .version(version)
-  .option("--dry", "do not create branch/pull request", program.BOOL, false)
+  .option("--dry", "do not create branch/pull request")
   .option("-d --define <key=value>", "set provider option", values => {
     if (!Array.isArray(values)) {
       values = [values];
