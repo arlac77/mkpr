@@ -36,11 +36,7 @@
     "execa": "^1.0.0",
     "github-repository-provider": "^4.0.41",
     "local-repository-provider": "^3.2.3",
-<<<<<<< HEAD
-    "repository-provider": "^8.0.0",
-=======
-    "repository-provider": "^8.0.1",
->>>>>>> 300906e27727b7a41869a9c3040c3caa42a1ed8f
+    "repository-provider": "^8.3.1",
     "semver": "^5.6.0"
   },
   "devDependencies": {
