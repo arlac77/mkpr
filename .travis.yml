@@ -6,8 +6,6 @@ branches:
     - master
     - /^greenkeeper/.*$/
 cache: npm
-before_install:
-  - npm i -g npm@latest
 before_script:
   - npm prune
   - npm install -g --production coveralls codecov
