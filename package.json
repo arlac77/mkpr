@@ -36,7 +36,7 @@
     "execa": "^1.0.0",
     "github-repository-provider": "^5.0.2",
     "local-repository-provider": "^3.2.3",
-    "repository-provider": "^8.4.1",
+    "repository-provider": "^8.5.0",
     "semver": "^5.6.0"
   },
   "devDependencies": {
