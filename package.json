@@ -7,9 +7,7 @@
   "main": "dist/index.js",
   "module": "src/mkpr.mjs",
   "description": "create pull request by streaming content through a filter",
-  "keywords": [
-    "npm-package-template"
-  ],
+  "keywords": [],
   "contributors": [
     {
       "name": "Markus Felten",
