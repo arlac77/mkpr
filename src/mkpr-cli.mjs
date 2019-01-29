@@ -1,16 +1,21 @@
 import { version, engines, description } from "../package.json";
-import { Content } from "repository-provider";
+import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { satisfies } from "semver";
 import execa from "execa";
-import program from "caporal";
+import program from "commander";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
 
 const properties = {};
+
+if (!satisfies(process.versions.node, engines.node)) {
+  console.error(`require node ${engines.node} (not ${process.versions.node})`);
+  process.exit(-1);
+}
 
 program
   .description(description)
@@ -28,42 +33,58 @@ program
   })
   .option("--files", "files", /\S+/, "*.js")
   .option("--message", "message", /.+/, "a commit message")
-  .argument("exec", "process to pipe content through")
-  .argument("[repos...]", "repos to merge")
-  .action(async (args, options, logger) => {
+  .command("exec [repos...]", "repos to merge")
+  .action(async (exec, ...repos) => {
+    repos.pop(); // TODO why
+
     try {
-      const aggregationProvider = new AggregationProvider();
+      const logLevel = program.debug ? "debug" : "info";
+
+      const providers = [];
+
+      const logOptions = {
+        logger: (...args) => {
+          console.log(...args);
+        },
+        logLevel
+      };
 
       [GithubProvider, LocalProvider].forEach(provider => {
-        let options = provider.optionsFromEnvironment(process.env);
-
-        if (options !== undefined || properties[provider.name] !== undefined) {
-          options = Object.assign({}, options, properties[provider.name]);
-          aggregationProvider.providers.push(new provider(options));
-        }
+        const options = Object.assign(
+          {},
+          logOptions,
+          properties[provider.name],
+          provider.optionsFromEnvironment(process.env)
+        );
+        providers.push(new provider(options));
       });
 
-      for (const repo of args.repos) {
+      const aggregationProvider = new AggregationProvider(
+        providers,
+        logOptions
+      );
+
+      for (const repo of repos) {
         const branch = await aggregationProvider.branch(repo);
 
         if (branch === undefined) {
-          logger.info("no such branch `${repo}`");
+          console.log("no such branch `${repo}`");
         } else {
           const changedFiles = [];
 
-          const [pe, ...pa] = args.exec.split(/\s+/);
+          const [pe, ...pa] = program.exec.split(/\s+/);
 
-          for await (const entry of branch.list([options.files])) {
-            logger.info(
+          for await (const entry of branch.list([program.files])) {
+            console.log(
               `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
             );
 
             const original = await branch.content(entry.path);
             const output = await execa.stdout(pe, pa, {
-              input: original.content
+              input: await original.getString()
             });
 
-            const modified = new Content(entry.path, output);
+            const modified = new StringContentEntry(entry.path, output);
 
             if (!original.equals(modified)) {
               changedFiles.push(modified);
@@ -73,29 +94,23 @@ program
           if (changedFiles.length > 0) {
             const prBranch = await branch.createBranch("mkpr-1");
 
-            await prBranch.commit(options.message, changedFiles);
+            await prBranch.commit(program.message, changedFiles);
 
             const pullRequest = await branch.createPullRequest(prBranch, {
-              title: `mkpr ${options.filePattern} ${args.exec}`
+              title: `mkpr ${program.filePattern} ${program.exec}`
             });
 
-            logger.info(pullRequest);
+            console.log(pullRequest);
           } else {
-            logger.info("no matching files");
+            console.log("no matching files");
 
             process.exit(1);
           }
         }
       }
     } catch (err) {
-      logger.info(err);
+      console.log(err);
       process.exit(-1);
     }
-  });
-
-if (!satisfies(process.versions.node, engines.node)) {
-  console.error(`require node ${engines.node} (not ${process.versions.node})`);
-  process.exit(-1);
-}
-
-program.parse(process.argv);
+  })
+  .parse(process.argv);
