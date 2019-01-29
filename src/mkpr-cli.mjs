@@ -1,4 +1,4 @@
-import { version, engines } from "../package.json";
+import { version, engines, description } from "../package.json";
 import { Content } from "repository-provider";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
@@ -13,7 +13,7 @@ process.on("unhandledRejection", reason => console.error(reason));
 const properties = {};
 
 program
-  .description("Create pull request by streaming content through a filter")
+  .description(description)
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("-d --define <key=value>", "set provider option", values => {
