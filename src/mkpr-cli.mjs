@@ -1,5 +1,5 @@
 import { version, engines, description } from "../package.json";
-import { StringContentEntry } from "content-entry";
+import { ReadableStreamContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
@@ -21,6 +21,7 @@ program
   .description(description)
   .version(version)
   .option("--dry", "do not create branch/pull request")
+  .option("--debug", "log level debug")
   .option("-d --define <key=value>", "set provider option", values => {
     if (!Array.isArray(values)) {
       values = [values];
@@ -84,7 +85,7 @@ program
               input: await original.getString()
             });
 
-            const modified = new StringContentEntry(entry.path, output);
+            const modified = new ReadableStreamContentEntry(entry.path, output);
 
             if (!original.equals(modified)) {
               changedFiles.push(modified);
