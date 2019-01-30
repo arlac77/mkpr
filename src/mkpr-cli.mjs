@@ -22,7 +22,7 @@ program
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("--debug", "log level debug")
-  .option("-d --define <key=value>", "set provider option", values => {
+  .option("-d, --define <key=value>", "set provider option", values => {
     if (!Array.isArray(values)) {
       values = [values];
     }
@@ -32,10 +32,12 @@ program
       setProperty(properties, k, v);
     });
   })
-  .option("--files", "files", /\S+/, "*.js")
-  .option("--message", "message", /.+/, "a commit message")
-  .command("exec [repos...]", "repos to merge")
+  .option("-f, --files <files>")
+  .option("--message <message>", /.+/, "a commit message")
+  .command("exec repo [repos...]", "repos to merge")
   .action(async (exec, ...repos) => {
+    const [pe, ...pa] = exec.split(/\s+/);
+
     repos.pop(); // TODO why
 
     try {
@@ -73,14 +75,13 @@ program
         } else {
           const changedFiles = [];
 
-          const [pe, ...pa] = program.exec.split(/\s+/);
-
-          for await (const entry of branch.list([program.files])) {
+          for await (const entry of branch.entries(program.files)) {
+            console.log(entry, entry.path, branch);
             console.log(
               `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
             );
 
-            const original = await branch.content(entry.path);
+            const original = await branch.entry(entry.path);
             const output = await execa.stdout(pe, pa, {
               input: await original.getString()
             });
