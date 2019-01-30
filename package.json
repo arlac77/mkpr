@@ -24,6 +24,7 @@
     "lint": "documentation lint src/mkpr.mjs",
     "posttest": "npm run prepare && markdown-doctest",
     "prepare": "rollup -c",
+    "pretest": "rollup -c",
     "test": "ava"
   },
   "dependencies": {
