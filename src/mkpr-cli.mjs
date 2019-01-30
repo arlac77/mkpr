@@ -76,19 +76,18 @@ program
           const changedFiles = [];
 
           for await (const entry of branch.entries(program.files)) {
-            console.log(entry, entry.path, branch);
             console.log(
-              `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.path}`
+              `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.name}`
             );
 
-            const original = await branch.entry(entry.path);
+            const original = await branch.entry(entry.name);
             const output = await execa.stdout(pe, pa, {
               input: await original.getString()
             });
 
-            const modified = new ReadableStreamContentEntry(entry.path, output);
+            const modified = new ReadableStreamContentEntry(entry.name, output);
 
-            if (!original.equals(modified)) {
+            if (!await original.equalsContent(modified)) {
               changedFiles.push(modified);
             }
           }
@@ -99,7 +98,7 @@ program
             await prBranch.commit(program.message, changedFiles);
 
             const pullRequest = await branch.createPullRequest(prBranch, {
-              title: `mkpr ${program.filePattern} ${program.exec}`
+              title: `mkpr ${program.filePattern} ${exec}`
             });
 
             console.log(pullRequest);
