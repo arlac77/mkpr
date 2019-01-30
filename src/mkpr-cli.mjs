@@ -87,9 +87,9 @@ program
 
             const modified = new ReadableStreamContentEntry(entry.name, output);
 
-            if (!await original.equalsContent(modified)) {
+        //    if (!await original.equalsContent(modified)) {
               changedFiles.push(modified);
-            }
+        //    }
           }
 
           if (changedFiles.length > 0) {
@@ -98,7 +98,7 @@ program
             await prBranch.commit(program.message, changedFiles);
 
             const pullRequest = await branch.createPullRequest(prBranch, {
-              title: `mkpr ${program.filePattern} ${exec}`
+              title: `mkpr ${program.files} ${exec}`
             });
 
             console.log(pullRequest);
