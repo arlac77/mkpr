@@ -1,5 +1,5 @@
 import { version, engines, description } from "../package.json";
-import { ReadableStreamContentEntry } from "content-entry";
+import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
@@ -86,10 +86,7 @@ program
                 input: await original.getString()
               });
 
-              const modified = new ReadableStreamContentEntry(
-                entry.name,
-                output
-              );
+              const modified = new StringContentEntry(entry.name, output);
 
               //    if (!await original.equalsContent(modified)) {
               changedFiles.push(modified);
