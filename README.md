@@ -17,10 +17,10 @@
 
 ## mkpr
 
-Keep npm package in sync with its template
+create pull request by streaming content through a filter
 
 ```shell
-mkpr --files '**/*.json' --exec sed --arg 1 --arg 2 myGithubUser/myRepo
+mkpr --files '**/*.json' 'sed s/a/b/' myGithubUser/myRepo
 ```
 
 # API
