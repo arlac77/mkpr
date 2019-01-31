@@ -33,7 +33,6 @@
     "content-entry": "^2.1.0",
     "execa": "^1.0.0",
     "github-repository-provider": "^6.0.16",
-    "install": "^0.12.2",
     "local-repository-provider": "^5.0.4",
     "semver": "^5.6.0"
   },
