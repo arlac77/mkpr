@@ -76,20 +76,25 @@ program
           const changedFiles = [];
 
           for await (const entry of branch.entries(program.files)) {
-            console.log(
-              `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.name}`
-            );
+            if (entry.isBlob) {
+              console.log(
+                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.name}`
+              );
 
-            const original = await branch.entry(entry.name);
-            const output = await execa.stdout(pe, pa, {
-              input: await original.getString()
-            });
+              const original = await branch.entry(entry.name);
+              const output = await execa.stdout(pe, pa, {
+                input: await original.getString()
+              });
 
-            const modified = new ReadableStreamContentEntry(entry.name, output);
+              const modified = new ReadableStreamContentEntry(
+                entry.name,
+                output
+              );
 
-        //    if (!await original.equalsContent(modified)) {
+              //    if (!await original.equalsContent(modified)) {
               changedFiles.push(modified);
-        //    }
+              //    }
+            }
           }
 
           if (changedFiles.length > 0) {
