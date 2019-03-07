@@ -24,3 +24,6 @@ jobs:
         script:
           - npx semantic-release
 cache: npm
+notifications:
+  email:
+    - '-markus.felten@gmx.de'
