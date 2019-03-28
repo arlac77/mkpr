@@ -4,9 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/index.js",
   "module": "src/mkpr.mjs",
-  "description": "create pull request by streaming content through a filter",
+  "description": "create pull request by modifying repo file content through a filter (stdin/stdout)",
   "keywords": [],
   "contributors": [
     {

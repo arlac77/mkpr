@@ -32,9 +32,9 @@ program
       setProperty(properties, k, v);
     });
   })
-  .option("-f, --files <files>")
+  .option("-f, --files <files>", "glob to select files in the repo", "**/*")
   .option("--message <message>", /.+/, "a commit message")
-  .command("exec repo [repos...]", "repos to merge")
+  .command("exec repo [repos...]", "command to be applied to the repositories")
   .action(async (exec, ...repos) => {
     const [pe, ...pa] = exec.split(/\s+/);
 
