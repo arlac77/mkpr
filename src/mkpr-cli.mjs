@@ -87,10 +87,11 @@ program
               });
 
               const modified = new StringContentEntry(entry.name, output);
+              const isEqual = await original.equalsContent(modified);
 
-              //    if (!await original.equalsContent(modified)) {
-              changedFiles.push(modified);
-              //    }
+              if (!isEqual) {
+                changedFiles.push(modified);
+              }
             }
           }
 
@@ -105,9 +106,7 @@ program
 
             console.log(pullRequest);
           } else {
-            console.log("no matching files");
-
-            process.exit(1);
+            console.log(`${repo}: nothing changed / no matching files`);
           }
         }
       }
