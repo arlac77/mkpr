@@ -31,7 +31,7 @@
     "commander": "^2.20.0",
     "content-entry": "^2.1.1",
     "execa": "^1.0.0",
-    "github-repository-provider": "^7.0.9",
+    "github-repository-provider": "^7.0.12",
     "local-repository-provider": "^6.2.3",
     "semver": "^6.0.0"
   },
