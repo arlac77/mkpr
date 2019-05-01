@@ -67,18 +67,13 @@ program
         logOptions
       );
 
-      for (const repo of repos) {
-        const branch = await aggregationProvider.branch(repo);
-
-        if (branch === undefined) {
-          console.log("no such branch `${repo}`");
-        } else {
+      for await (const branch of aggregationProvider.branches(repos)) {
           const changedFiles = [];
 
           for await (const entry of branch.entries(program.files)) {
             if (entry.isBlob) {
               console.log(
-                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${repo} ${entry.name}`
+                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${branch} ${entry.name}`
               );
 
               const original = await branch.entry(entry.name);
@@ -106,9 +101,8 @@ program
 
             console.log(pullRequest);
           } else {
-            console.log(`${repo}: nothing changed / no matching files`);
+            console.log(`${branch}: nothing changed / no matching files`);
           }
-        }
       }
     } catch (err) {
       console.log(err);
