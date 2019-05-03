@@ -81,17 +81,23 @@ program
             if (program.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
-              modified = new StringContentEntry(
-                entry.name,
-                JSON.stringify(
-                  applyPatch(
-                    JSON.parse(await original.getString()),
-                    JSON.parse(exec)
-                  ).newDocument,
-                  undefined,
-                  2
-                )
+              const os = await original.getString();
+              const originalLastChar = os[original.length - 1];
+
+              const newContent = JSON.stringify(
+                applyPatch(JSON.parse(os), JSON.parse(exec)).newDocument,
+                undefined,
+                2
               );
+
+              const lastChar = newContent[newContent.length - 1];
+
+              // keep trailing newline
+              if (originalLastChar === "\n" && lastChar === "}") {
+                newContent += "\n";
+              }
+
+              modified = new StringContentEntry(entry.name, newContent);
             } else {
               const [pe, ...pa] = exec.split(/\s+/);
 
