@@ -6,6 +6,7 @@ import { AggregationProvider } from "aggregation-repository-provider";
 import { satisfies } from "semver";
 import execa from "execa";
 import program from "commander";
+import { applyPatch } from "fast-json-patch";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
@@ -33,12 +34,14 @@ program
     });
   })
   .option("-f, --files <files>", "glob to select files in the repo", "**/*")
+  .option(
+    "--jsonpatch",
+    "interpret exec as json patch to be applied to selected files"
+  )
   .option("--message <message>", /.+/, "a commit message")
   .command("exec repo [repos...]", "command to be applied to the repositories")
   .action(async (exec, ...repos) => {
-    const [pe, ...pa] = exec.split(/\s+/);
-
-    repos.pop(); // TODO why
+    repos.pop(); // skip command itself
 
     try {
       const logLevel = program.debug ? "debug" : "info";
@@ -68,41 +71,63 @@ program
       );
 
       for await (const branch of aggregationProvider.branches(repos)) {
-          const changedFiles = [];
+        const changedFiles = [];
 
-          for await (const entry of branch.entries(program.files)) {
-            if (entry.isBlob) {
+        for await (const entry of branch.entries(program.files)) {
+          if (entry.isBlob) {
+            const original = await branch.entry(entry.name);
+
+            let modified;
+            if (program.jsonpatch) {
+              console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
+
+              modified = new StringContentEntry(
+                entry.name,
+                JSON.stringify(
+                  applyPatch(
+                    JSON.parse(await original.getString()),
+                    JSON.parse(exec)
+                  ).newDocument,
+                  undefined,
+                  2
+                )
+              );
+            } else {
+              const [pe, ...pa] = exec.split(/\s+/);
+
               console.log(
-                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${branch} ${entry.name}`
+                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${branch} ${
+                  entry.name
+                }`
               );
 
-              const original = await branch.entry(entry.name);
               const output = await execa.stdout(pe, pa, {
                 input: await original.getString()
               });
 
-              const modified = new StringContentEntry(entry.name, output);
-              const isEqual = await original.equalsContent(modified);
+              modified = new StringContentEntry(entry.name, output);
+            }
+            const isEqual = await original.equalsContent(modified);
 
-              if (!isEqual) {
-                changedFiles.push(modified);
-              }
+            if (!isEqual) {
+              changedFiles.push(modified);
             }
           }
+        }
 
-          if (changedFiles.length > 0) {
-            const prBranch = await branch.createBranch("mkpr-1");
+        if (changedFiles.length > 0) {
+          const prBranch = await branch.createBranch("mkpr-1");
 
-            await prBranch.commit(program.message, changedFiles);
+          await prBranch.commit(program.message, changedFiles);
 
-            const pullRequest = await branch.createPullRequest(prBranch, {
-              title: `mkpr ${program.files} ${exec}`
-            });
+          const pullRequest = await branch.createPullRequest(prBranch, {
+            title: `mkpr ${program.files} ${exec}`
+          });
 
-            console.log(pullRequest);
-          } else {
-            console.log(`${branch}: nothing changed / no matching files`);
-          }
+          console.log(pullRequest);
+        } else {
+          console.log(`${branch}: nothing changed / no matching files`);
+        }
       }
     } catch (err) {
       console.log(err);
