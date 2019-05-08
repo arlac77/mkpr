@@ -84,20 +84,35 @@ program
               const os = await original.getString();
               const originalLastChar = os[original.length - 1];
 
-              const newContent = JSON.stringify(
-                applyPatch(JSON.parse(os), JSON.parse(exec)).newDocument,
-                undefined,
-                2
-              );
+              try {
+                let patch = JSON.parse(exec);
+                if (!Array.isArray(patch)) {
+                  patch = [path];
+                }
 
-              const lastChar = newContent[newContent.length - 1];
+                const newContent = JSON.stringify(
+                  applyPatch(JSON.parse(os), patch).newDocument,
+                  undefined,
+                  2
+                );
 
-              // keep trailing newline
-              if (originalLastChar === "\n" && lastChar === "}") {
-                newContent += "\n";
+                const lastChar = newContent[newContent.length - 1];
+
+                // keep trailing newline
+                if (originalLastChar === "\n" && lastChar === "}") {
+                  newContent += "\n";
+                }
+
+                modified = new StringContentEntry(entry.name, newContent);
+              } catch (e) {
+                if (e.name === "TEST_OPERATION_FAILED") {
+                  console.log("Skip patch test not fullfilled",e.operation);
+                }
+                else {
+                  console.error(e);
+                }
+                continue;
               }
-
-              modified = new StringContentEntry(entry.name, newContent);
             } else {
               const [pe, ...pa] = exec.split(/\s+/);
 
@@ -113,6 +128,7 @@ program
 
               modified = new StringContentEntry(entry.name, output);
             }
+
             const isEqual = await original.equalsContent(modified);
 
             if (!isEqual) {
