@@ -1,12 +1,12 @@
 import { version, engines, description } from "../package.json";
+import execa from "execa";
+import program from "commander";
+import { satisfies } from "semver";
+import { applyPatch } from "fast-json-patch";
 import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
-import { satisfies } from "semver";
-import execa from "execa";
-import program from "commander";
-import { applyPatch } from "fast-json-patch";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
@@ -33,20 +33,19 @@ program
       setProperty(properties, k, v);
     });
   })
+  .option("--prbranch <name>", "name of the pull request branch", "mkpr/0001")
   .option("-f, --files <files>", "glob to select files in the repo", "**/*")
   .option(
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
   )
   .option("--message <message>", /.+/, "a commit message")
-  .command("exec repo [repos...]", "command to be applied to the repositories")
+  .command("exec branch [branches...]", "command to be applied to the branches")
   .action(async (exec, ...repos) => {
     repos.pop(); // skip command itself
 
     try {
       const logLevel = program.debug ? "debug" : "info";
-
-      const providers = [];
 
       const logOptions = {
         logger: (...args) => {
@@ -55,18 +54,15 @@ program
         logLevel
       };
 
-      [GithubProvider, LocalProvider].forEach(provider => {
-        const options = Object.assign(
-          {},
-          logOptions,
-          properties[provider.name],
-          provider.optionsFromEnvironment(process.env)
-        );
-        providers.push(new provider(options));
-      });
-
       const aggregationProvider = new AggregationProvider(
-        providers,
+        [GithubProvider, LocalProvider].map(
+          provider =>
+            new provider({
+              ...logOptions,
+              ...properties[provider.name],
+              ...provider.optionsFromEnvironment(process.env)
+            })
+        ),
         logOptions
       );
 
@@ -106,9 +102,8 @@ program
                 modified = new StringContentEntry(entry.name, newContent);
               } catch (e) {
                 if (e.name === "TEST_OPERATION_FAILED") {
-                  console.log("Skip patch test not fullfilled",e.operation);
-                }
-                else {
+                  console.log("Skip patch test not fullfilled", e.operation);
+                } else {
                   console.error(e);
                 }
                 continue;
@@ -138,7 +133,7 @@ program
         }
 
         if (changedFiles.length > 0) {
-          const prBranch = await branch.createBranch("mkpr-1");
+          const prBranch = await branch.createBranch(program.prbranch);
 
           await prBranch.commit(program.message, changedFiles);
 
@@ -146,7 +141,7 @@ program
             title: `mkpr ${program.files} ${exec}`
           });
 
-          console.log(pullRequest);
+          console.log(pullRequest.name);
         } else {
           console.log(`${branch}: nothing changed / no matching files`);
         }

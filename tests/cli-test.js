@@ -9,5 +9,6 @@ test("cli", async t => {
     "sed s/8.11/8.12/",
     "arlac77/sync-test-repository"
   ]);
+  console.log(p.stdout);
   t.is(p.code, 0);
 });

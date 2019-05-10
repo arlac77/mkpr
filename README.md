@@ -21,7 +21,7 @@ create pull request by streaming content through a filter
 mkpr --files '**/*.json' 'sed s/a/b/' myGithubUser/myRepo
 ```
 
-create pull request for all package.json files in the myuser/* config * repos of github
+create pull request for all package.json files in the myuser/_ config _ repos of github
 with the devDependency/config-expander set to ^10.3.2
 
 ```shell
@@ -35,6 +35,7 @@ mkpr --files package.json --jsonpatch '[{"op":"replace","path":"/devDependencies
 ## Table of Contents
 
 # install
+
 ```shell
 npm install -g mkpr
 ```
