@@ -23,5 +23,6 @@ test("cli", async t => {
     );
     const repo = await provider.repository("arlac77/sync-test-repository");
     await repo.deletePullRequest(m[1]);
+    await repo.deleteBranch('mkpr/0001');
   }
 });
