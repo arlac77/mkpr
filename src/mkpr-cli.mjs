@@ -140,8 +140,7 @@ program
           const pullRequest = await branch.createPullRequest(prBranch, {
             title: `mkpr ${program.files} ${exec}`
           });
-
-          console.log(pullRequest.name);
+          console.log(`${branch} ${pullRequest}`);
         } else {
           console.log(`${branch}: nothing changed / no matching files`);
         }
