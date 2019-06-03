@@ -27,12 +27,12 @@
     "test": "ava"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.4.3",
+    "aggregation-repository-provider": "^2.4.5",
     "commander": "^2.20.0",
     "content-entry": "^2.1.2",
     "execa": "^1.0.0",
     "fast-json-patch": "^2.1.0",
-    "github-repository-provider": "^7.3.0",
+    "github-repository-provider": "^7.3.1",
     "local-repository-provider": "^6.4.0",
     "semver": "^6.0.0"
   },
@@ -64,7 +64,6 @@
   "homepage": "https://github.com/arlac77/mkpr#readme",
   "ava": {
     "files": [
-      "tests/*-test.js",
       "tests/*-test.mjs"
     ],
     "require": [
@@ -73,7 +72,6 @@
     "babel": false,
     "compileEnhancements": false,
     "extensions": [
-      "js",
       "mjs"
     ]
   },
