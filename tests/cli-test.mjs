@@ -1,10 +1,14 @@
 import test from "ava";
 import execa from "execa";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
 import { GithubProvider } from "github-repository-provider";
 
+const here = dirname(fileURLToPath(import.meta.url));
+
 test("cli", async t => {
-  const p = await execa(join(__dirname, "..", "bin", "mkpr"), [
+  const p = await execa(join(here, "..", "bin", "mkpr"), [
     "--files",
     "package.json",
     "sed s/8.11/8.12/",
