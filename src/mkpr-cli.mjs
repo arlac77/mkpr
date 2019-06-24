@@ -57,11 +57,11 @@ program
       const aggregationProvider = new AggregationProvider(
         [GithubProvider, LocalProvider].map(
           provider =>
-            new provider({
+            provider.initialize({
               ...logOptions,
-              ...properties[provider.name],
-              ...provider.optionsFromEnvironment(process.env)
-            })
+              ...properties[provider.name] },
+              process.env
+            )
         ),
         logOptions
       );
