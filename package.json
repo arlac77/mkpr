@@ -29,7 +29,7 @@
   "dependencies": {
     "aggregation-repository-provider": "^2.4.10",
     "commander": "^2.20.0",
-    "content-entry": "^2.1.2",
+    "content-entry": "^2.1.4",
     "execa": "^2.0.1",
     "fast-json-patch": "^2.1.0",
     "github-repository-provider": "^7.3.10",
