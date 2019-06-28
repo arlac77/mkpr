@@ -14,11 +14,11 @@ test("cli", async t => {
     "sed s/8.11/8.12/",
     "arlac77/sync-test-repository"
   ]);
-  t.is(p.code, 0);
+  t.is(p.exitCode, 0);
 
-  console.log(p.stdout);
+  console.log(p.all);
 
-  const m = p.stdout.match(/(\d+):/);
+  const m = p.all.match(/(\d+):/);
   //console.log(m);
 
   if (m) {

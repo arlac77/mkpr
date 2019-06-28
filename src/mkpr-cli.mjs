@@ -117,11 +117,11 @@ program
                 }`
               );
 
-              const output = await execa.stdout(pe, pa, {
+              const e = await execa(pe, pa, {
                 input: await original.getString()
               });
 
-              modified = new StringContentEntry(entry.name, output);
+              modified = new StringContentEntry(entry.name, e.stdout);
             }
 
             const isEqual = await original.equalsContent(modified);
