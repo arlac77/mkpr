@@ -68,8 +68,11 @@ program
 
       for await (const branch of aggregationProvider.branches(repos)) {
         const changedFiles = [];
+        let numberOfFiles = 0;
 
         for await (const entry of branch.entries(program.files)) {
+          numberOfFiles++;
+
           if (entry.isBlob) {
             const original = await branch.entry(entry.name);
 
@@ -147,7 +150,7 @@ program
             console.log(`${branch} ${pullRequest}`);
           }
         } else {
-          console.log(`${branch}: nothing changed / no matching files`);
+          console.log(branch + ': ' + (numberOfFiles === 0 ? 'no matching files' : 'nothing changed'));
         }
       }
     } catch (err) {
