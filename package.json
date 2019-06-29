@@ -32,7 +32,7 @@
     "content-entry": "^2.1.4",
     "execa": "^2.0.1",
     "fast-json-patch": "^2.1.0",
-    "github-repository-provider": "^7.3.12",
+    "github-repository-provider": "^7.3.13",
     "local-repository-provider": "^6.4.9",
     "semver": "^6.1.2"
   },
