@@ -133,14 +133,19 @@ program
         }
 
         if (changedFiles.length > 0) {
-          const prBranch = await branch.createBranch(program.prbranch);
+          if(program.dry) {
+            console.log("changed",changedFiles.map(f => f.name));
+          }
+          else {
+            const prBranch = await branch.createBranch(program.prbranch);
 
-          await prBranch.commit(program.message, changedFiles);
+            await prBranch.commit(program.message, changedFiles);
 
-          const pullRequest = await branch.createPullRequest(prBranch, {
-            title: `mkpr ${program.files} ${exec}`
-          });
-          console.log(`${branch} ${pullRequest}`);
+            const pullRequest = await branch.createPullRequest(prBranch, {
+              title: `mkpr ${program.files} ${exec}`
+            });
+            console.log(`${branch} ${pullRequest}`);
+          }
         } else {
           console.log(`${branch}: nothing changed / no matching files`);
         }
