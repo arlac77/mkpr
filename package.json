@@ -27,7 +27,7 @@
     "test": "ava"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.5.0",
+    "aggregation-repository-provider": "^2.6.0",
     "commander": "^2.20.0",
     "content-entry": "^2.1.4",
     "execa": "^2.0.1",
