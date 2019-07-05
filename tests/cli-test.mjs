@@ -19,14 +19,19 @@ test("cli", async t => {
   console.log(p.all);
 
   const m = p.all.match(/(\d+):/);
-  //console.log(m);
 
   if (m) {
+    const prName = m[1];
     const provider = new GithubProvider(
       GithubProvider.optionsFromEnvironment(process.env)
     );
     const repo = await provider.repository("arlac77/sync-test-repository");
-    await repo.deletePullRequest(m[1]);
+
+    const pr = await repo.pullRequest(prName);
+
+    console.log("PR",prName,pr);
+
+    await repo.deletePullRequest(prName);
     await repo.deleteBranch('mkpr/0001');
   }
 });
