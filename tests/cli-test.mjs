@@ -7,12 +7,14 @@ import { GithubProvider } from "github-repository-provider";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
+const REPO= "arlac77/sync-test-repository";
+
 test("cli", async t => {
   const p = await execa(join(here, "..", "bin", "mkpr"), [
     "--files",
     "package.json",
-    "sed s/8.11/8.12/",
-    "arlac77/sync-test-repository"
+    "sed s/14.1.1/14.1.2/",
+    REPO
   ]);
   t.is(p.exitCode, 0);
 
@@ -21,17 +23,20 @@ test("cli", async t => {
   const m = p.all.match(/(\d+):/);
 
   if (m) {
-    const prName = m[1];
-    const provider = new GithubProvider(
-      GithubProvider.optionsFromEnvironment(process.env)
-    );
-    const repo = await provider.repository("arlac77/sync-test-repository");
+    const prNumber = m[1];
+    const provider = GithubProvider.initialize(undefined, process.env);
+    const repo = await provider.repository(REPO);
 
-    const pr = await repo.pullRequest(prName);
+    const pr = await repo.pullRequest(prNumber);
 
-    console.log("PR",prName,pr);
+    console.log("PR", prNumber, pr, pr.source.name, pr.destination.name);
 
-    await repo.deletePullRequest(prName);
-    await repo.deleteBranch('mkpr/0001');
+    t.is(pr.number,prNumber);
+    t.is(pr.title,'mkpr package.json sed s/14.1.1/14.1.2/');
+    t.is(pr.destination.name,'master');
+    t.true(pr.source.name.startsWith('mkpr/'));
+
+  //  await repo.deletePullRequest(prNumber);
+    await repo.deleteBranch(pr.source.name);
   }
 });

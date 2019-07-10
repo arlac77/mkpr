@@ -7,6 +7,7 @@ import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
+import { generateBranchName } from "repository-provider";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
@@ -33,7 +34,7 @@ program
       setProperty(properties, k, v);
     });
   })
-  .option("--prbranch <name>", "name of the pull request branch", "mkpr/0001")
+  .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
   .option("-f, --files <files>", "glob to select files in the repo", "**/*")
   .option(
     "--jsonpatch",
@@ -55,13 +56,14 @@ program
       };
 
       const aggregationProvider = new AggregationProvider(
-        [GithubProvider, LocalProvider].map(
-          provider =>
-            provider.initialize({
+        [GithubProvider, LocalProvider].map(provider =>
+          provider.initialize(
+            {
               ...logOptions,
-              ...properties[provider.name] },
-              process.env
-            )
+              ...properties[provider.name]
+            },
+            process.env
+          )
         ),
         logOptions
       );
@@ -136,21 +138,26 @@ program
         }
 
         if (changedFiles.length > 0) {
-          if(program.dry) {
-            console.log("changed",changedFiles.map(f => f.name));
-          }
-          else {
-            const prBranch = await branch.createBranch(program.prbranch);
+          if (program.dry) {
+            console.log("changed", changedFiles.map(f => f.name));
+          } else {
+            const prBranch = await branch.createBranch(
+              await generateBranchName(branch.repository, program.prbranch)
+            );
 
             await prBranch.commit(program.message, changedFiles);
 
             const pullRequest = await branch.createPullRequest(prBranch, {
               title: `mkpr ${program.files} ${exec}`
             });
-            console.log(`${branch} ${pullRequest}`);
+            console.log(`${pullRequest.number}: ${pullRequest.title}`);
           }
         } else {
-          console.log(branch + ': ' + (numberOfFiles === 0 ? 'no matching files' : 'nothing changed'));
+          console.log(
+            branch +
+              ": " +
+              (numberOfFiles === 0 ? "no matching files" : "nothing changed")
+          );
         }
       }
     } catch (err) {
