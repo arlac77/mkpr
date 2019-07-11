@@ -41,6 +41,7 @@ program
     "interpret exec as json patch to be applied to selected files"
   )
   .option("--message <message>", /.+/, "a commit message")
+  .option("--title <title>", /.+/, "mkpr")
   .command("exec branch [branches...]", "command to be applied to the branches")
   .action(async (exec, ...repos) => {
     repos.pop(); // skip command itself
@@ -148,7 +149,12 @@ program
             await prBranch.commit(program.message, changedFiles);
 
             const pullRequest = await branch.createPullRequest(prBranch, {
-              title: `mkpr ${program.files} ${exec}`
+              title: program.title,
+              body: `Applied mkpr on ${program.files}
+\`\`\`${program.jsonpatch ? 'json':'sh'}
+${exec}
+\`\`\`
+`
             });
             console.log(`${pullRequest.number}: ${pullRequest.title}`);
           }
