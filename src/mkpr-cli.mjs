@@ -5,6 +5,7 @@ import { satisfies } from "semver";
 import { applyPatch } from "fast-json-patch";
 import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
+import { BitbucketProvider } from "bitbucket-repository-provider";
 import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { generateBranchName } from "repository-provider";
@@ -57,7 +58,7 @@ program
       };
 
       const aggregationProvider = new AggregationProvider(
-        [GithubProvider, LocalProvider].map(provider =>
+        [GithubProvider, BitbucketProvider, LocalProvider].map(provider =>
           provider.initialize(
             {
               ...logOptions,
