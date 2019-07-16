@@ -34,7 +34,7 @@
     "execa": "^2.0.3",
     "fast-json-patch": "^2.1.0",
     "github-repository-provider": "^7.4.3",
-    "local-repository-provider": "^6.4.28",
+    "local-repository-provider": "^6.4.32",
     "semver": "^6.2.0"
   },
   "devDependencies": {
