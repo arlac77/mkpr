@@ -9,15 +9,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 const REPO = "arlac77/sync-test-repository";
 
-test("cli", async t => {
-  const p = await execa(join(here, "..", "bin", "mkpr"), [
-    "--files",
-    "package.json",
-    "sed s/14.1.1/14.1.2/",
-    REPO
-  ]);
-  t.is(p.exitCode, 0);
-
+async function prAssert(t, p) {
   const m = p.all.match(/(\d+):/);
 
   if (m) {
@@ -27,7 +19,7 @@ test("cli", async t => {
 
     const pr = await repo.pullRequest(prNumber);
 
-    console.log("PR", prNumber, pr, pr.source.name, pr.destination.name);
+    t.log("PR", prNumber, pr, pr.source.name, pr.destination.name);
 
     t.is(pr.number, prNumber);
     t.is(pr.title, "mkpr");
@@ -37,4 +29,30 @@ test("cli", async t => {
     //  await repo.deletePullRequest(prNumber);
     await repo.deleteBranch(pr.source.name);
   }
+}
+
+test.serial("cli one exec arg", async t => {
+  const p = await execa(join(here, "..", "bin", "mkpr"), [
+    "--files",
+    "package.json",
+    "sed s/14.1.1/14.1.2/",
+    REPO
+  ]);
+
+  t.is(p.exitCode, 0);
+  await prAssert(t, p);
+});
+
+test.serial("cli exc separator", async t => {
+  const p = await execa(join(here, "..", "bin", "mkpr"), [
+    "--files",
+    "package.json",
+    "sed",
+    "s/14.1.1/14.1.2/",
+    "%",
+    REPO
+  ]);
+
+  t.is(p.exitCode, 0);
+  await prAssert(t, p);
 });

@@ -17,8 +17,10 @@
 
 create pull request by streaming content through a filter
 
+% separates executable args from branch list
+
 ```shell
-mkpr --files '**/*.json' 'sed s/a/b/' myGithubUser/myRepo
+mkpr --files '**/*.json' sed s/a/b/ % myGithubUser/myRepo
 ```
 
 create pull request for all package.json files in the myuser/_ config _ repos of github

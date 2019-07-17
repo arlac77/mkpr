@@ -70,6 +70,22 @@ program
         logOptions
       );
 
+      let args;
+
+      const si = repos.indexOf('%');
+      //console.log(si,repos);
+
+      if(si >= 0) {
+        args = repos.splice(0,si);
+        repos.shift();
+      }
+      else {
+        [exec, ...args] = exec.split(/\s+/);
+      }
+
+      //console.log(exec, args, repos);
+      //process.exit(0);
+
       for await (const branch of aggregationProvider.branches(repos)) {
         const changedFiles = [];
         let numberOfFiles = 0;
@@ -116,15 +132,13 @@ program
                 continue;
               }
             } else {
-              const [pe, ...pa] = exec.split(/\s+/);
-
               console.log(
-                `${pe} ${pa.map(x => `'${x}'`).join(" ")} ${branch} ${
+                `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
                   entry.name
                 }`
               );
 
-              const e = await execa(pe, pa, {
+              const e = await execa(exec, args, {
                 input: await original.getString()
               });
 
