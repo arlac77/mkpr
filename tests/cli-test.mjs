@@ -23,6 +23,7 @@ async function prAssert(t, p) {
 
     t.is(pr.number, prNumber);
     t.is(pr.title, "mkpr");
+  //  t.is(pr.body, "sed s/14.1.1/14.1.2/");
     t.is(pr.destination.name, "master");
     t.true(pr.source.name.startsWith("mkpr/"));
 

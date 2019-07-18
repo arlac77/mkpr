@@ -167,7 +167,7 @@ program
               title: program.title,
               body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? 'json':'sh'}
-${exec}
+${exec} ${args}
 \`\`\`
 `
             });
