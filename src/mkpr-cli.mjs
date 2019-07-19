@@ -72,19 +72,14 @@ program
 
       let args;
 
-      const si = repos.indexOf('%');
-      //console.log(si,repos);
+      const si = repos.indexOf("%");
 
-      if(si >= 0) {
-        args = repos.splice(0,si);
+      if (si >= 0) {
+        args = repos.splice(0, si);
         repos.shift();
-      }
-      else {
+      } else {
         [exec, ...args] = exec.split(/\s+/);
       }
-
-      //console.log(exec, args, repos);
-      //process.exit(0);
 
       for await (const branch of aggregationProvider.branches(repos)) {
         const changedFiles = [];
@@ -95,13 +90,14 @@ program
 
           if (entry.isBlob) {
             const original = await branch.entry(entry.name);
+            let newContent;
+
+            const os = await original.getString();
+            const originalLastChar = os[os.length - 1];
 
             let modified;
             if (program.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
-
-              const os = await original.getString();
-              const originalLastChar = os[original.length - 1];
 
               try {
                 let patch = JSON.parse(exec);
@@ -109,23 +105,14 @@ program
                   patch = [path];
                 }
 
-                const newContent = JSON.stringify(
+                newContent = JSON.stringify(
                   applyPatch(JSON.parse(os), patch).newDocument,
                   undefined,
                   2
                 );
-
-                const lastChar = newContent[newContent.length - 1];
-
-                // keep trailing newline
-                if (originalLastChar === "\n" && lastChar === "}") {
-                  newContent += "\n";
-                }
-
-                modified = new StringContentEntry(entry.name, newContent);
               } catch (e) {
                 if (e.name === "TEST_OPERATION_FAILED") {
-                  console.log("Skip patch test not fullfilled", e.operation);
+                  console.log("Skip: patch test not fullfilled", e.operation);
                 } else {
                   console.error(e);
                 }
@@ -142,8 +129,17 @@ program
                 input: await original.getString()
               });
 
-              modified = new StringContentEntry(entry.name, e.stdout);
+              newContent = e.stdout;
             }
+
+            const lastChar = newContent[newContent.length - 1];
+
+            // keep trailing newline
+            if (originalLastChar === "\n" && lastChar !== "\n") {
+              newContent += "\n";
+            }
+
+            modified = new StringContentEntry(entry.name, newContent);
 
             const isEqual = await original.equalsContent(modified);
 
@@ -166,7 +162,7 @@ program
             const pullRequest = await branch.createPullRequest(prBranch, {
               title: program.title,
               body: `Applied mkpr on ${program.files}
-\`\`\`${program.jsonpatch ? 'json':'sh'}
+\`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
