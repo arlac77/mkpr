@@ -178,5 +178,5 @@ ${exec} ${args}
   .parse(process.argv);
 
 function asArray(obj) {
-  return Array.isArray(obj) ? obj : [obj];
+  return Array.isArray(obj) ? obj : obj === undefined ? [] : [obj];
 }
