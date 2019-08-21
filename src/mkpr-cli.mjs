@@ -25,16 +25,12 @@ program
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("--debug", "log level debug")
-  .option("-d, --define <key=value>", "set provider option", values => {
-    if (!Array.isArray(values)) {
-      values = [values];
-    }
-
-    values.forEach(value => {
+  .option("-d, --define <key=value>", "set provider option", values =>
+    asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
       setProperty(properties, k, v);
-    });
-  })
+    })
+  )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
   .option("-f, --files <files>", "glob to select files in the repo", "**/*")
   .option(
@@ -100,10 +96,7 @@ program
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
               try {
-                let patch = JSON.parse(exec);
-                if (!Array.isArray(patch)) {
-                  patch = [path];
-                }
+                const patch = asArray(JSON.parse(exec));
 
                 newContent = JSON.stringify(
                   applyPatch(JSON.parse(os), patch).newDocument,
@@ -183,3 +176,7 @@ ${exec} ${args}
     }
   })
   .parse(process.argv);
+
+function asArray(obj) {
+  return Array.isArray(obj) ? obj : [obj];
+}
