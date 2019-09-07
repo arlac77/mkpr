@@ -9,7 +9,8 @@ import pkg from "./package.json";
 const external = [
   ...builtins,
   "node-fetch",
-  "universal-user-agent"
+  "universal-user-agent",
+  "@octokit/rest"
 ];
 
 export default Object.keys(pkg.bin).map(name => {
