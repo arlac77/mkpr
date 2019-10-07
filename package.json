@@ -5,7 +5,7 @@
     "access": "public"
   },
   "module": "src/mkpr.mjs",
-  "description": "create pull request by modifying repo file content through a filter (stdin/stdout)",
+  "description": "create pull request by pipeing repository content through filter like sed",
   "keywords": [],
   "contributors": [
     {
