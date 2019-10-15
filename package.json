@@ -33,8 +33,8 @@
     "content-entry": "^2.2.1",
     "execa": "^3.0.0",
     "fast-json-patch": "^3.0.0-1",
-    "local-repository-provider": "^6.4.41",
     "github-repository-provider": "^7.4.21",
+    "local-repository-provider": "^6.4.41",
     "semver": "^6.2.0"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "documentation": "^12.1.2",
     "esm": "^3.2.25",
     "markdown-doctest": "^1.0.0",
-    "rollup": "^1.23.1",
+    "rollup": "^1.24.0",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-executable": "^1.5.1",
