@@ -37,12 +37,10 @@ program
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
   )
-  .option("--message <message>", /.+/, "a commit message")
-  .option("--title <title>", /.+/, "mkpr")
-  .command("exec branch [branches...]", "command to be applied to the branches")
-  .action(async (exec, ...repos) => {
-    repos.pop(); // skip command itself
-
+  .option("--message <commit message>", /.+/, "a commit message")
+  .option("--title <pr title>", /.+/, "mkpr")
+  .command("transformation with args % [branches...]", "command to be applied to the branches")
+  .action(async (commander, repos) => {
     try {
       const logLevel = program.debug ? "debug" : "info";
 
@@ -68,6 +66,7 @@ program
 
       let args;
 
+      let exec = repos.shift();
       const si = repos.indexOf("%");
 
       if (si >= 0) {

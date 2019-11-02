@@ -33,26 +33,22 @@ async function prAssert(t, p) {
 }
 
 test.serial("cli one exec arg", async t => {
-  const p = await execa(join(here, "..", "bin", "mkpr"), [
-    "--files",
-    "package.json",
-    "sed s/14.1.1/14.1.2/",
-    REPO
-  ], { all: true });
+  const p = await execa(
+    join(here, "..", "bin", "mkpr"),
+    ["--files", "package.json", "sed s/14.1.1/14.1.2/", REPO],
+    { all: true }
+  );
 
   t.is(p.exitCode, 0);
   await prAssert(t, p);
 });
 
-test.serial("cli exc separator", async t => {
-  const p = await execa(join(here, "..", "bin", "mkpr"), [
-    "--files",
-    "package.json",
-    "sed",
-    "s/14.1.1/14.1.2/",
-    "%",
-    REPO
-  ],{ all: true });
+test.serial("cli exec separator %", async t => {
+  const p = await execa(
+    join(here, "..", "bin", "mkpr"),
+    ["--files", "package.json", "sed", "s/14.1.1/14.1.2/", "%", REPO],
+    { all: true }
+  );
 
   t.is(p.exitCode, 0);
   await prAssert(t, p);
