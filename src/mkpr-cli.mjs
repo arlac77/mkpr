@@ -80,6 +80,11 @@ program
         const changedFiles = [];
         let numberOfFiles = 0;
 
+        if(branch.isArchived) {
+          console.log(`Skip ${branch} as it is archived`);
+          continue;
+        }
+
         for await (const entry of branch.entries(program.files)) {
           numberOfFiles++;
 
