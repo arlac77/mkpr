@@ -27,13 +27,13 @@
     "test": "ava"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.6.34",
+    "aggregation-repository-provider": "^2.6.35",
     "bitbucket-repository-provider": "^3.3.40",
     "commander": "^4.0.0",
     "content-entry": "^2.2.3",
     "execa": "^3.4.0",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.4.32",
+    "github-repository-provider": "^7.4.33",
     "local-repository-provider": "^6.4.54",
     "semver": "^6.2.0"
   },
