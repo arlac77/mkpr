@@ -35,7 +35,7 @@
     "fast-json-patch": "^3.0.0-1",
     "github-repository-provider": "^7.4.33",
     "local-repository-provider": "^6.4.54",
-    "semver": "^6.2.0"
+    "semver": "^7.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.0",
