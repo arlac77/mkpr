@@ -1,7 +1,7 @@
 import { version, engines, description } from "../package.json";
 import execa from "execa";
 import program from "commander";
-import { satisfies } from "semver";
+import satisfies from "semver/functions/satisfies.js";
 import { applyPatch } from "fast-json-patch";
 import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
