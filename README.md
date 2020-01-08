@@ -2,8 +2,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/mkpr/badge.svg)](https://snyk.io/test/github/arlac77/mkpr)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![npm](https://img.shields.io/npm/v/mkpr.svg)](https://www.npmjs.com/package/mkpr)
-[![Greenkeeper](https://badges.greenkeeper.io/arlac77/mkpr.svg)](https://greenkeeper.io/)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/arlac77/mkpr)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![minified size](https://badgen.net/bundlephobia/min/mkpr)](https://bundlephobia.com/result?p=mkpr)
 [![downloads](http://img.shields.io/npm/dm/mkpr.svg?style=flat-square)](https://npmjs.org/package/mkpr)
@@ -11,6 +9,8 @@
 [![Build Status](https://secure.travis-ci.org/arlac77/mkpr.png)](http://travis-ci.org/arlac77/mkpr)
 [![codecov.io](http://codecov.io/github/arlac77/mkpr/coverage.svg?branch=master)](http://codecov.io/github/arlac77/mkpr?branch=master)
 [![Coverage Status](https://coveralls.io/repos/arlac77/mkpr/badge.svg)](https://coveralls.io/r/arlac77/mkpr)
+[![Greenkeeper](https://badges.greenkeeper.io/arlac77/mkpr.svg)](https://greenkeeper.io/)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/arlac77/mkpr)
 
 ## mkpr
 
