@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.37",
-    "bitbucket-repository-provider": "^3.3.41",
+    "bitbucket-repository-provider": "^3.3.42",
     "commander": "^4.1.0",
     "content-entry": "^2.2.4",
     "execa": "^4.0.0",
@@ -49,7 +49,7 @@
     "rollup": "^1.29.0",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-executable": "^1.5.2",
-    "semantic-release": "^15.14.0"
+    "semantic-release": "^16.0.0"
   },
   "engines": {
     "node": ">=12.14.1"
