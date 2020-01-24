@@ -11,8 +11,10 @@ const external = [
   ...builtins,
   "node-fetch",
   "universal-user-agent",
-  "@octokit/rest"
+  "@octokit/rest",
+  "@octokit/plugin-throttling"
 ];
+
 const extensions = ["js", "mjs", "jsx", "tag"];
 const plugins = [
   commonjs(),
