@@ -26,14 +26,14 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.41",
-    "bitbucket-repository-provider": "^3.3.46",
+    "bitbucket-repository-provider": "^3.3.49",
     "commander": "^4.1.0",
     "content-entry": "^2.2.6",
     "execa": "^4.0.0",
     "fast-json-patch": "^3.0.0-1",
     "github-repository-provider": "^7.5.11",
     "local-repository-provider": "^6.5.6",
-    "semver": "^7.1.1"
+    "semver": "^7.1.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.1",
