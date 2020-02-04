@@ -20,7 +20,6 @@
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
     "docs": "documentation readme src/mkpr.mjs --section=API",
     "lint": "documentation lint src/mkpr.mjs",
-    "posttest": "npm run prepare",
     "prepare": "rollup -c",
     "test": "ava"
   },
