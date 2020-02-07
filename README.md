@@ -21,7 +21,7 @@ create pull request by streaming content through a filter
 ```shell
 export GH_TOKEN='token providing repositroy write access' # for github repos
 
-mkpr --files '**/*.json' sed s/a/b/ -- myGithubUser/myRepo
+mkpr --files '**/*.json' sed s/a/b/ % myGithubUser/myRepo
 ```
 
 create pull request for all package.json files in the myuser/_ config _ repos of github

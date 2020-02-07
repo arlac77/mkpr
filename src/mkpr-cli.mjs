@@ -71,7 +71,7 @@ program
       let args;
 
       let exec = repos.shift();
-      const si = repos.indexOf("--");
+      const si = repos.indexOf("%");
 
       if (si >= 0) {
         args = repos.splice(0, si);
@@ -130,6 +130,7 @@ program
                 }`
               );
 
+              console.log("EXECA", exec, args);
               const e = await execa(exec, args, {
                 input: await original.getString()
               });
