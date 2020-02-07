@@ -3,9 +3,12 @@ jobs:
   include:
     - stage: test
       node_js:
-        - 12.14.1
+        - 12.15.0
       script:
         - npm test
+        - npm run cover
+        - npx codecov
+        - cat ./build/coverage/lcov.info | npx coveralls
     - stage: doc
       node_js: lts/*
       skip_cleanup: 'true'
