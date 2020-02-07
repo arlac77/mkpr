@@ -1,11 +1,12 @@
 import resolve from "@rollup/plugin-node-resolve";
-import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 
 import executable from "rollup-plugin-executable";
 import cleanup from "rollup-plugin-cleanup";
+import consts from "rollup-plugin-consts";
 import builtins from "builtin-modules";
-import pkg from "./package.json";
+
+import { name, version, description, main, module, bin, engines } from "./package.json";
 
 const external = [
   ...builtins,
@@ -19,37 +20,38 @@ const extensions = ["js", "mjs", "jsx", "tag"];
 const plugins = [
   commonjs(),
   resolve(),
-  json({
-    //  include: "package.json",
-    preferConst: true,
-    compact: true
+  consts({
+    name,
+    version,
+    description,
+    engines
   }),
   cleanup({
     extensions
   })
 ];
 
-const config = Object.keys(pkg.bin || {}).map(name => {
+const config = Object.keys(bin).map(name => {
   return {
     input: `src/${name}-cli.mjs`,
     output: {
       plugins: [executable()],
       banner:
         '#!/bin/sh\n":" //# comment; exec /usr/bin/env node --experimental-modules --experimental-wasm-modules "$0" "$@"',
-      file: pkg.bin[name]
+      file: bin[name]
     }
   };
 });
 
 if (
-  pkg.module !== undefined &&
-  pkg.main !== undefined &&
-  pkg.module != pkg.main
+  module !== undefined &&
+  main !== undefined &&
+  module != main
 ) {
   config.push({
-    input: pkg.module,
+    input: module,
     output: {
-      file: pkg.main
+      file: main
     }
   });
 }

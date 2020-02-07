@@ -1,4 +1,6 @@
-import { version, engines, description } from "../package.json";
+import version from "consts:version";
+import description from "consts:description";
+import engines from "consts:engines";
 import execa from "execa";
 import program from "commander";
 import satisfies from "semver/functions/satisfies.js";
@@ -67,7 +69,7 @@ program
       let args;
 
       let exec = repos.shift();
-      const si = repos.indexOf("%");
+      const si = repos.indexOf("--");
 
       if (si >= 0) {
         args = repos.splice(0, si);
@@ -77,6 +79,10 @@ program
       }
 
       for await (const branch of aggregationProvider.branches(repos)) {
+        if(!branch) { // TODO why
+          continue;
+        }
+
         const changedFiles = [];
         let numberOfFiles = 0;
 

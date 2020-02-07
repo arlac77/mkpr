@@ -2,7 +2,6 @@ import test from "ava";
 import execa from "execa";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-
 import { GithubProvider } from "github-repository-provider";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -32,21 +31,10 @@ async function prAssert(t, p) {
   }
 }
 
-test.serial("cli one exec arg", async t => {
+test.serial("cli exec separator --", async t => {
   const p = await execa(
     join(here, "..", "bin", "mkpr"),
-    ["--files", "package.json", "sed s/14.1.1/14.1.2/", REPO],
-    { all: true }
-  );
-
-  t.is(p.exitCode, 0);
-  await prAssert(t, p);
-});
-
-test.serial("cli exec separator %", async t => {
-  const p = await execa(
-    join(here, "..", "bin", "mkpr"),
-    ["--files", "package.json", "sed", "s/14.1.1/14.1.2/", "%", REPO],
+    ["--files", "package.json", "sed", "s/14.1.1/14.1.2/", "--", REPO],
     { all: true }
   );
 
