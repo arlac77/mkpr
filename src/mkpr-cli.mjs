@@ -12,8 +12,10 @@ import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { generateBranchName } from "repository-provider";
 
+/*
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
+*/
 
 const properties = {};
 
