@@ -128,7 +128,6 @@ program
                 }`
               );
 
-              console.log("EXECA", exec, args);
               const e = await execa(exec, args, {
                 input: await original.getString()
               });
