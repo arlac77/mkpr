@@ -17,11 +17,11 @@
     "mkpr": "bin/mkpr"
   },
   "scripts": {
+    "prepare": "rollup -c",
+    "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
     "docs": "documentation readme src/mkpr.mjs --section=API",
-    "lint": "documentation lint src/mkpr.mjs",
-    "prepare": "rollup -c",
-    "test": "ava --timeout 2m"
+    "lint": "documentation lint src/mkpr.mjs"
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.41",
@@ -49,7 +49,7 @@
     "semantic-release": "^17.0.4"
   },
   "engines": {
-    "node": ">=12.16.0"
+    "node": ">=12.16.1"
   },
   "repository": {
     "type": "git",
