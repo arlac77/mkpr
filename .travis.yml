@@ -7,6 +7,8 @@ jobs:
       script:
         - npm test
         - npm run cover
+        - npx codecov
+        - cat ./build/coverage/lcov.info | npx coveralls
     - stage: doc
       node_js: lts/*
       skip_cleanup: 'true'
