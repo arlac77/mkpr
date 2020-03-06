@@ -24,7 +24,7 @@
     "lint": "documentation lint src/mkpr.mjs"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.6.41",
+    "aggregation-repository-provider": "^2.6.42",
     "bitbucket-repository-provider": "^3.4.8",
     "commander": "^4.1.1",
     "content-entry": "^2.3.1",
