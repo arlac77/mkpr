@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "ava": "^3.5.2",
     "builtin-modules": "^3.1.0",
@@ -44,6 +43,7 @@
     "documentation": "^12.1.4",
     "rollup": "^2.3.1",
     "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-consts": "^1.0.1",
     "rollup-plugin-executable": "^1.5.2",
     "semantic-release": "^17.0.4"
   },

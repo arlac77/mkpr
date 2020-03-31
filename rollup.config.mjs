@@ -1,29 +1,37 @@
 import { readFileSync } from "fs";
 import resolve from "@rollup/plugin-node-resolve";
-import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
+import consts from "rollup-plugin-consts";
 
 import executable from "rollup-plugin-executable";
 import cleanup from "rollup-plugin-cleanup";
 import builtins from "builtin-modules";
 
-const external = [...builtins];
+const { name, version, description, main, module, bin, engines } = JSON.parse(
+  readFileSync("./package.json", { encoding: "utf8" })
+);
+
+const external = [
+  ...builtins,
+  "node-fetch",
+  "universal-user-agent",
+  "@octokit/rest",
+  "@octokit/plugin-throttling"
+];
 const extensions = ["js", "mjs", "jsx", "tag"];
 const plugins = [
   commonjs(),
   resolve(),
-  json({
-    preferConst: true,
-    compact: true
+  consts({
+    name,
+    version,
+    description,
+    engines
   }),
   cleanup({
     extensions
   })
 ];
-
-const { bin, main, module } = JSON.parse(
-  readFileSync("./package.json", { encoding: "utf8" })
-);
 
 const config = Object.keys(bin || {}).map(name => {
   return {
@@ -31,7 +39,7 @@ const config = Object.keys(bin || {}).map(name => {
     output: {
       plugins: [executable()],
       banner:
-        '#!/bin/sh\n":" //# comment; exec /usr/bin/env node --experimental-modules --experimental-wasm-modules "$0" "$@"',
+      '#!/bin/sh\n":" //# comment; exec /usr/bin/env node "$0" "$@"',
       file: bin[name]
     }
   };
