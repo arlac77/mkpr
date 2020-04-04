@@ -12,8 +12,8 @@ import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { generateBranchName } from "repository-provider";
 
-process.on("uncaughtException", err => console.error(err));
-process.on("unhandledRejection", reason => console.error(reason));
+process.on("uncaughtException", (err) => console.error(err));
+process.on("unhandledRejection", (reason) => console.error(reason));
 
 const properties = {};
 
@@ -27,8 +27,8 @@ program
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("--debug", "log level debug")
-  .option("-d, --define <key=value>", "set provider option", values =>
-    asArray(values).forEach(value => {
+  .option("-d, --define <key=value>", "set provider option", (values) =>
+    asArray(values).forEach((value) => {
       const [k, v] = value.split(/=/);
       setProperty(properties, k, v);
     })
@@ -41,7 +41,10 @@ program
   )
   .option("--message <commit message>", /.+/, "mkpr")
   .option("--title <pr title>", /.+/, "mkpr")
-  .command("transformation with args % [branches...]", "command to be applied to the branches")
+  .command(
+    "transformation with args % [branches...]",
+    "command to be applied to the branches"
+  )
   .action(async (commander, repos) => {
     try {
       console.log(repos);
@@ -51,15 +54,15 @@ program
         logger: (...args) => {
           console.log(...args);
         },
-        logLevel
+        logLevel,
       };
 
       const aggregationProvider = new AggregationProvider(
-        [GithubProvider, BitbucketProvider, LocalProvider].map(provider =>
+        [GithubProvider, BitbucketProvider, LocalProvider].map((provider) =>
           provider.initialize(
             {
               ...logOptions,
-              ...properties[provider.name]
+              ...properties[provider.name],
             },
             process.env
           )
@@ -83,7 +86,7 @@ program
         const changedFiles = [];
         let numberOfFiles = 0;
 
-        if(branch.isArchived) {
+        if (branch.isArchived) {
           console.log(`Skip ${branch} as it is archived`);
           continue;
         }
@@ -92,13 +95,10 @@ program
           numberOfFiles++;
 
           if (entry.isBlob) {
-            const original = await branch.entry(entry.name);
-            let newContent;
+            const originalString = await entry.getString();
+            const originalLastChar = originalString[originalString.length - 1];
 
-            const os = await original.getString();
-            const originalLastChar = os[os.length - 1];
-
-            let modified;
+            let modified, newContent;
             if (program.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
@@ -106,7 +106,7 @@ program
                 const patch = asArray(JSON.parse(exec));
 
                 newContent = JSON.stringify(
-                  applyPatch(JSON.parse(os), patch).newDocument,
+                  applyPatch(JSON.parse(originalString), patch).newDocument,
                   undefined,
                   2
                 );
@@ -120,13 +120,13 @@ program
               }
             } else {
               console.log(
-                `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
+                `${exec} ${args.map((x) => `'${x}'`).join(" ")} ${branch} ${
                   entry.name
                 }`
               );
 
               const e = await execa(exec, args, {
-                input: await original.getString()
+                input: originalString,
               });
 
               newContent = e.stdout;
@@ -141,7 +141,7 @@ program
 
             modified = new StringContentEntry(entry.name, newContent);
 
-            const isEqual = await original.equalsContent(modified);
+            const isEqual = await entry.equalsContent(modified);
 
             if (!isEqual) {
               changedFiles.push(modified);
@@ -151,7 +151,10 @@ program
 
         if (changedFiles.length > 0) {
           if (program.dry) {
-            console.log("changed", changedFiles.map(f => f.name));
+            console.log(
+              "changed",
+              changedFiles.map((f) => f.name)
+            );
           } else {
             const prBranch = await branch.createBranch(
               await generateBranchName(branch.repository, program.prbranch)
@@ -165,7 +168,7 @@ program
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
-`
+`,
             });
             console.log(`${pullRequest.number}: ${pullRequest.title}`);
           }
