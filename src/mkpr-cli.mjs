@@ -39,11 +39,12 @@ program
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
   )
-  .option("--message <commit message>", /.+/, "a commit message")
+  .option("--message <commit message>", /.+/, "mkpr")
   .option("--title <pr title>", /.+/, "mkpr")
   .command("transformation with args % [branches...]", "command to be applied to the branches")
   .action(async (commander, repos) => {
     try {
+      console.log(repos);
       const logLevel = program.debug ? "debug" : "info";
 
       const logOptions = {
@@ -79,10 +80,6 @@ program
       }
 
       for await (const branch of aggregationProvider.branches(repos)) {
-        if(!branch) { // TODO why
-          continue;
-        }
-
         const changedFiles = [];
         let numberOfFiles = 0;
 
