@@ -47,7 +47,6 @@ program
   )
   .action(async (commander, repos) => {
     try {
-      console.log(repos);
       const logLevel = program.debug ? "debug" : "info";
 
       const logOptions = {
