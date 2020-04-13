@@ -31,10 +31,18 @@ async function prAssert(t, p) {
   }
 }
 
-test.serial("cli exec separator --", async t => {
+test.serial("cli exec separator %", async t => {
   const p = await execa(
-    join(here, "..", "bin", "mkpr"),
-    ["--files", "package.json", "sed", "s/14.1.1/14.1.2/", "%", REPO],
+    "node",
+    [
+      join(here, "..", "src", "mkpr-cli.mjs"),
+      "--files",
+      "package.json",
+      "sed",
+      "s/14.1.1/14.1.2/",
+      "%",
+      REPO
+    ],
     { all: true }
   );
 

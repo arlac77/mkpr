@@ -1,10 +1,10 @@
-import version from "consts:version";
-import description from "consts:description";
-import engines from "consts:engines";
+import { readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import execa from "execa";
 import program from "commander";
 import satisfies from "semver/functions/satisfies.js";
-import { applyPatch } from "fast-json-patch";
+import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import { GithubProvider } from "github-repository-provider";
 import { BitbucketProvider } from "bitbucket-repository-provider";
@@ -12,8 +12,15 @@ import { LocalProvider } from "local-repository-provider";
 import { AggregationProvider } from "aggregation-repository-provider";
 import { generateBranchName } from "repository-provider";
 
-process.on("uncaughtException", (err) => console.error(err));
-process.on("unhandledRejection", (reason) => console.error(reason));
+process.on("uncaughtException", err => console.error(err));
+process.on("unhandledRejection", reason => console.error(reason));
+
+const { version, description, engines } = JSON.parse(
+  readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), "..", "package.json"),
+    { endoding: "utf8" }
+  )
+);
 
 const properties = {};
 
@@ -27,8 +34,8 @@ program
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("--debug", "log level debug")
-  .option("-d, --define <key=value>", "set provider option", (values) =>
-    asArray(values).forEach((value) => {
+  .option("-d, --define <key=value>", "set provider option", values =>
+    asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
       setProperty(properties, k, v);
     })
@@ -53,15 +60,15 @@ program
         logger: (...args) => {
           console.log(...args);
         },
-        logLevel,
+        logLevel
       };
 
       const aggregationProvider = new AggregationProvider(
-        [GithubProvider, BitbucketProvider, LocalProvider].map((provider) =>
+        [GithubProvider, BitbucketProvider, LocalProvider].map(provider =>
           provider.initialize(
             {
               ...logOptions,
-              ...properties[provider.name],
+              ...properties[provider.name]
             },
             process.env
           )
@@ -119,13 +126,13 @@ program
               }
             } else {
               console.log(
-                `${exec} ${args.map((x) => `'${x}'`).join(" ")} ${branch} ${
+                `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
                   entry.name
                 }`
               );
 
               const e = await execa(exec, args, {
-                input: originalString,
+                input: originalString
               });
 
               newContent = e.stdout;
@@ -152,7 +159,7 @@ program
           if (program.dry) {
             console.log(
               "changed",
-              changedFiles.map((f) => f.name)
+              changedFiles.map(f => f.name)
             );
           } else {
             const prBranch = await branch.createBranch(
@@ -167,7 +174,7 @@ program
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
-`,
+`
             });
             console.log(`${pullRequest.number}: ${pullRequest.title}`);
           }
