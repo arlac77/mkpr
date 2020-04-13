@@ -4,6 +4,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
+  "type": "module",
+  "main": "src/mkpr.mjs",
   "module": "src/mkpr.mjs",
   "description": "create pull request by pipeing repository content through filter like sed",
   "contributors": [
