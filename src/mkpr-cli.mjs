@@ -36,6 +36,7 @@ program
   .description(description)
   .version(version)
   .option("--dry", "do not create branch/pull request")
+  .option("--trace", "log level trace")
   .option("--debug", "log level debug")
   .option("-d, --define <key=value>", "set provider option", values =>
     asArray(values).forEach(value => {
@@ -57,12 +58,9 @@ program
   )
   .action(async (commander, repos) => {
     try {
-      const logLevel = program.debug ? "debug" : "info";
-
+      const logLevel = program.trace ? "trace" : program.debug ? "debug" : "info";
       const logOptions = {
-        logger: (...args) => {
-          console.log(...args);
-        },
+        logger: (...args) => console.log(...args),
         logLevel
       };
 
