@@ -4,10 +4,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "type": "module",
   "main": "src/mkpr-cli.mjs",
-  "module": "src/mkpr-cli.mjs",
+  "module": "src/index.mjs",
+  "svelte": "src/index.svelte",
   "description": "create pull request by pipeing repository content through filter like sed",
+  "keywords": [
+    "svelte"
+  ],
   "contributors": [
     {
       "name": "Markus Felten",
@@ -19,10 +24,11 @@
     "mkpr": "src/mkpr-cli.mjs"
   },
   "scripts": {
-    "test": "ava --timeout 2m",
+    "start": "rollup -c example/rollup.config.mjs -w",
+    "test": "testcafe $BROWSER:headless tests/*-test.js -s test-results --app-init-delay 500 --app \"rollup -c example/rollup.config.mjs -w\"",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "",
-    "lint": ""
+    "docs": "documentation readme src/mkpr-cli.mjs --section=API",
+    "lint": "documentation lint src/mkpr-cli.mjs"
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.53",
@@ -39,10 +45,13 @@
     "ava": "^3.7.1",
     "c8": "^7.1.0",
     "documentation": "^12.3.0",
-    "semantic-release": "^17.0.7"
+    "rollup": "^2.7.2",
+    "semantic-release": "^17.0.7",
+    "svelte": "^3.21.0",
+    "testcafe": "^1.8.4"
   },
   "engines": {
-    "node": ">=12.16.2"
+    "node": ">=13.13.0"
   },
   "repository": {
     "type": "git",
@@ -54,8 +63,9 @@
   "homepage": "https://github.com/arlac77/mkpr#readme",
   "template": {
     "inheritFrom": [
+      "arlac77/template-arlac77-github",
       "arlac77/template-esm-only",
-      "arlac77/template-github"
+      "arlac77/template-svelte-component"
     ]
   }
 }
