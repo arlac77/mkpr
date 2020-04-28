@@ -27,17 +27,17 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.54",
-    "bitbucket-repository-provider": "^3.5.10",
+    "bitbucket-repository-provider": "^3.5.11",
     "commander": "^5.1.0",
     "content-entry": "^2.3.4",
     "execa": "^4.0.0",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.9.3",
-    "local-repository-provider": "^6.5.23",
+    "github-repository-provider": "^7.9.4",
+    "local-repository-provider": "^6.5.24",
     "semver": "^7.3.2"
   },
   "devDependencies": {
-    "ava": "^3.8.0",
+    "ava": "^3.8.1",
     "c8": "^7.1.0",
     "documentation": "^12.3.0",
     "semantic-release": "^17.0.7"
