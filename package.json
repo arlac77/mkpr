@@ -7,7 +7,6 @@
   "sideEffects": false,
   "type": "module",
   "main": "src/mkpr-cli.mjs",
-  "module": "src/mkpr-cli.mjs",
   "description": "create pull request by pipeing repository content through filter like sed",
   "contributors": [
     {
@@ -22,8 +21,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "",
-    "lint": ""
+    "docs": "documentation readme src/mkpr-cli.mjs --section=API",
+    "lint": "documentation lint src/mkpr-cli.mjs"
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.54",
@@ -43,7 +42,7 @@
     "semantic-release": "^17.0.7"
   },
   "engines": {
-    "node": ">=12.16.2"
+    "node": ">=12.16.3"
   },
   "repository": {
     "type": "git",
