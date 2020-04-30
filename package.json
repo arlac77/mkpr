@@ -21,8 +21,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "",
-    "lint": ""
+    "docs": "documentation readme src/mkpr-cli.mjs --section=API",
+    "lint": "documentation lint src/mkpr-cli.mjs"
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.6.55",
