@@ -8,8 +8,7 @@
   "type": "module",
   "main": "./src/mkpr-cli.mjs",
   "exports": {
-    ".": "./src/mkpr-cli.mjs",
-    "./": "./"
+    ".": "./src/mkpr-cli.mjs"
   },
   "description": "create pull request by pipeing repository content through filter like sed",
   "contributors": [
