@@ -9,10 +9,10 @@ import program from "commander";
 import satisfies from "semver/functions/satisfies.js";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
-import { GithubProvider } from "github-repository-provider";
-import { BitbucketProvider } from "bitbucket-repository-provider";
-import { LocalProvider } from "local-repository-provider";
-import { AggregationProvider } from "aggregation-repository-provider";
+import GithubProvider from "github-repository-provider";
+import BitbucketProvider from "bitbucket-repository-provider";
+import LocalProvider from "local-repository-provider";
+import AggregationProvider from "aggregation-repository-provider";
 import { generateBranchName } from "repository-provider";
 
 process.on("uncaughtException", err => console.error(err));
@@ -38,7 +38,7 @@ program
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
-  .option("-d, --define <key=value>", "set provider option", values =>
+  .option("-d, --define <key=value>", "set option", values =>
     asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
       setProperty(properties, k, v);
@@ -58,23 +58,16 @@ program
   )
   .action(async (commander, repos) => {
     try {
-      const logLevel = program.trace ? "trace" : program.debug ? "debug" : "info";
-      const logOptions = {
-        logger: (...args) => console.log(...args),
-        logLevel
-      };
+      const logLevel = program.trace
+        ? "trace"
+        : program.debug
+        ? "debug"
+        : "info";
 
-      const aggregationProvider = new AggregationProvider(
-        [GithubProvider, BitbucketProvider, LocalProvider].map(provider =>
-          provider.initialize(
-            {
-              ...logOptions,
-              ...properties[provider.name]
-            },
-            process.env
-          )
-        ),
-        logOptions
+      const aggregationProvider = AggregationProvider.initialize(
+        [GithubProvider, BitbucketProvider, LocalProvider],
+        { ...properties, logger: (...args) => console.log(...args), logLevel },
+        process.env
       );
 
       let args;
