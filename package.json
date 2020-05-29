@@ -28,14 +28,14 @@
     "lint": ""
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.7.2",
-    "bitbucket-repository-provider": "^3.5.33",
+    "aggregation-repository-provider": "^2.7.3",
+    "bitbucket-repository-provider": "^3.5.34",
     "commander": "^5.1.0",
     "content-entry": "^2.5.0",
     "execa": "^4.0.2",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.9.29",
-    "local-repository-provider": "^6.5.41",
+    "github-repository-provider": "^7.9.30",
+    "local-repository-provider": "^6.5.42",
     "semver": "^7.3.2"
   },
   "devDependencies": {
