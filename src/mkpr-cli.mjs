@@ -170,7 +170,7 @@ ${exec} ${args}
 \`\`\`
 `
             });
-            console.log(`${pullRequest.number}: ${pullRequest.title}`);
+            console.log(`${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`);
           }
         } else {
           console.log(
