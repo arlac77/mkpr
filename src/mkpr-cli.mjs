@@ -66,7 +66,7 @@ program
 
       const aggregationProvider = AggregationProvider.initialize(
         [GithubProvider, BitbucketProvider, LocalProvider],
-        { ...properties, logger: (...args) => console.log(...args), logLevel },
+        properties,
         process.env
       );
 
