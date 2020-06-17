@@ -24,8 +24,8 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "",
-    "lint": ""
+    "docs": "documentation readme ./src/mkpr-cli.mjs --section=API",
+    "lint": "documentation lint ./src/mkpr-cli.mjs"
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.8.7",
@@ -58,8 +58,10 @@
   "template": {
     "inheritFrom": [
       "arlac77/template-arlac77-github",
+      "arlac77/template-documentation",
       "arlac77/template-esm-only",
-      "arlac77/template-node-app"
+      "arlac77/template-node-app",
+      "arlac77/template-coverage"
     ]
   }
 }
