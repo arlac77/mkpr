@@ -24,13 +24,13 @@
   "scripts": {
     "test": "ava --timeout 2m",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme ./src/mkpr-cli.mjs --section=API",
-    "lint": "documentation lint ./src/mkpr-cli.mjs"
+    "docs": "",
+    "lint": ""
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.8.8",
-    "bitbucket-repository-provider": "^3.7.14",
-    "commander": "^5.1.0",
+    "bitbucket-repository-provider": "^3.7.15",
+    "commander": "^6.0.0",
     "content-entry": "^2.5.0",
     "execa": "^4.0.3",
     "fast-json-patch": "^3.0.0-1",
@@ -45,7 +45,7 @@
     "semantic-release": "^17.1.1"
   },
   "engines": {
-    "node": ">=12.18.2"
+    "node": ">=12.18.3"
   },
   "repository": {
     "type": "git",
