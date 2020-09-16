@@ -171,7 +171,7 @@ ${exec} ${args}
 `
               });
               console.log(
-                `${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`
+                `${branch.provider.name}/${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`
               );
             } catch (e) {
               console.log(`${branch.fullCondensedName}(<${prBranch.fullCondensedName})`, e);
