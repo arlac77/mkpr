@@ -82,7 +82,7 @@ program
       }
 
       for await (const branch of aggregationProvider.branches(repos)) {
-        const changedFiles = [];
+        const toBeCommited = [];
         let numberOfFiles = 0;
 
         if (!branch.isWritable) {
@@ -143,23 +143,23 @@ program
             const isEqual = await entry.equalsContent(modified);
 
             if (!isEqual) {
-              changedFiles.push(modified);
+              toBeCommited.push(modified);
             }
           }
         }
 
-        if (changedFiles.length > 0) {
+        if (toBeCommited.length > 0) {
           if (program.dry) {
             console.log(
               "changed",
-              changedFiles.map(f => f.name)
+              toBeCommited.map(f => f.name)
             );
           } else {
             const prBranch = await branch.createBranch(
               await generateBranchName(branch.repository, program.prbranch)
             );
 
-            await prBranch.commit(program.message, changedFiles);
+            await prBranch.commit(program.message, toBeCommited);
 
             try {
               const pullRequest = await prBranch.createPullRequest(branch, {
