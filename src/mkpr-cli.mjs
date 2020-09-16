@@ -85,8 +85,8 @@ program
         const changedFiles = [];
         let numberOfFiles = 0;
 
-        if (branch.isArchived) {
-          console.log(`Skip ${branch} as it is archived`);
+        if (!branch.isWritable) {
+          console.log(`Skip ${branch} as it is not writable`);
           continue;
         }
 
@@ -161,15 +161,22 @@ program
 
             await prBranch.commit(program.message, changedFiles);
 
-            const pullRequest = await branch.createPullRequest(prBranch, {
-              title: program.title,
-              body: `Applied mkpr on ${program.files}
+            try {
+              const pullRequest = await branch.createPullRequest(prBranch, {
+                title: program.title,
+                body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
-            });
-            console.log(`${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`);
+              });
+              console.log(
+                `${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`
+              );
+            } catch (e) {
+              console.log(`${branch.fullCondensedName}(<${prBranch.fullCondensedName})`, e);
+              await prBranch.delete();
+            }
           }
         } else {
           console.log(
