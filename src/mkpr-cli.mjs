@@ -162,7 +162,7 @@ program
             await prBranch.commit(program.message, changedFiles);
 
             try {
-              const pullRequest = await branch.createPullRequest(prBranch, {
+              const pullRequest = await prBranch.createPullRequest(branch, {
                 title: program.title,
                 body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
