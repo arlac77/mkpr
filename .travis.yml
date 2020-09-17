@@ -8,12 +8,6 @@ jobs:
         - npm test
         - npm run cover
         - cat ./build/coverage/lcov.info | npx coveralls
-    - stage: doc
-      node_js: lts/*
-      skip_cleanup: 'true'
-      script:
-        - npm run lint
-        - npm run docs
     - stage: release
       node_js: lts/*
       script: skip
