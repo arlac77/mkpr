@@ -170,9 +170,7 @@ ${exec} ${args}
 \`\`\`
 `
               });
-              console.log(
-                `${branch.provider.name}/${branch.fullCondensedName}[${pullRequest.number}]: ${pullRequest.title}`
-              );
+              console.log(pullRequest.identifier);
             } catch (e) {
               console.log(`${branch.fullCondensedName}(<${prBranch.fullCondensedName})`, e);
               await prBranch.delete();
