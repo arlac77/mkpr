@@ -155,26 +155,24 @@ program
               toBeCommited.map(f => f.name)
             );
           } else {
-            const prBranch = await branch.createBranch(
-              await generateBranchName(branch.repository, program.prbranch)
-            );
-
-            await prBranch.commit(program.message, toBeCommited);
-
-            try {
-              const pullRequest = await prBranch.createPullRequest(branch, {
+            const pr = await branch.commitIntoPullRequest(
+              program.message,
+              toBeCommited,
+              {
+                pullRequestBranch: await generateBranchName(
+                  branch.repository,
+                  program.prbranch
+                ),
                 title: program.title,
                 body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
-              });
-              console.log(pullRequest.identifier);
-            } catch (e) {
-              console.log(`${branch.fullCondensedName}(<${prBranch.fullCondensedName})`, e);
-              await prBranch.delete();
-            }
+              }
+            );
+
+            console.log(`${pr.identifier}: ${pr.title}`);
           }
         } else {
           console.log(
