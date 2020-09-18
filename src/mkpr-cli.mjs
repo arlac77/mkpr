@@ -149,31 +149,25 @@ program
         }
 
         if (toBeCommited.length > 0) {
-          if (program.dry) {
-            console.log(
-              "changed",
-              toBeCommited.map(f => f.name)
-            );
-          } else {
-            const pr = await branch.commitIntoPullRequest(
-              program.message,
-              toBeCommited,
-              {
-                pullRequestBranch: await generateBranchName(
-                  branch.repository,
-                  program.prbranch
-                ),
-                title: program.title,
-                body: `Applied mkpr on ${program.files}
+          const pr = await branch.commitIntoPullRequest(
+            program.message,
+            toBeCommited,
+            {
+              dry: program.dry,
+              pullRequestBranch: await generateBranchName(
+                branch.repository,
+                program.prbranch
+              ),
+              title: program.title,
+              body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
-              }
-            );
+            }
+          );
 
-            console.log(`${pr.identifier}: ${pr.title}`);
-          }
+          console.log(`${pr.identifier}: ${pr.title}`);
         } else {
           console.log(
             branch +
