@@ -36,7 +36,7 @@ test.serial("cli exec separator %", async t => {
     "node",
     [
       join(here, "..", "src", "mkpr-cli.mjs"),
-      "--files",
+      "--entries",
       "package.json",
       "sed",
       "s/14.1.1/14.1.2/",

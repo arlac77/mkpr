@@ -44,7 +44,7 @@ program
     })
   )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
-  .option("-f, --files <files>", "glob to select files in the repo", "**/*")
+  .option("-e, --entries <entries>", "glob to select entries in the repo", "**/*")
   .option(
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
@@ -83,15 +83,15 @@ program
 
       for await (const branch of aggregationProvider.branches(repos)) {
         const toBeCommited = [];
-        let numberOfFiles = 0;
+        let numberOfEntries = 0;
 
         if (!branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
         }
 
-        for await (const entry of branch.entries(program.files)) {
-          numberOfFiles++;
+        for await (const entry of branch.entries(program.entries)) {
+          numberOfEntries++;
 
           if (entry.isBlob) {
             const originalString = await entry.getString();
@@ -172,7 +172,7 @@ ${exec} ${args}
           console.log(
             branch +
               ": " +
-              (numberOfFiles === 0 ? "no matching files" : "nothing changed")
+              (numberOfEntries === 0 ? "no matching entries" : "nothing changed")
           );
         }
       }

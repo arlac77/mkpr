@@ -11,6 +11,12 @@
     ".": "./src/mkpr-cli.mjs"
   },
   "description": "create pull request by pipeing repository content through filter like sed",
+  "keywords": [
+    "github",
+    "bitbucket",
+    "pull-request",
+    "patch"
+  ],
   "contributors": [
     {
       "name": "Markus Felten",
