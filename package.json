@@ -38,7 +38,7 @@
     "content-entry": "^2.5.0",
     "execa": "^4.0.3",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.17.15",
+    "github-repository-provider": "^7.17.16",
     "local-repository-provider": "^6.7.21",
     "semver": "^7.3.2"
   },
