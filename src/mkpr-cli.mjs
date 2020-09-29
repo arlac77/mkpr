@@ -85,7 +85,7 @@ program
         const toBeCommited = [];
         let numberOfEntries = 0;
 
-        if (!branch.isWritable) {
+        if (!branch || !branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
         }
