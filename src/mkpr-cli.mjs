@@ -5,7 +5,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import execa from "execa";
 import program from "commander";
-import satisfies from "semver/functions/satisfies.js";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import GithubProvider from "github-repository-provider";
@@ -25,11 +24,6 @@ const { version, description, engines } = JSON.parse(
 );
 
 const properties = {};
-
-if (!satisfies(process.versions.node, engines.node)) {
-  console.error(`require node ${engines.node} (not ${process.versions.node})`);
-  process.exit(-1);
-}
 
 program
   .description(description)
