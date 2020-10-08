@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import execa from "execa";
 import program from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
@@ -16,10 +14,10 @@ import { generateBranchName } from "repository-provider";
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
 
-const { version, description, engines } = JSON.parse(
+const { version, description } = JSON.parse(
   readFileSync(
-    join(dirname(fileURLToPath(import.meta.url)), "..", "package.json"),
-    { endoding: "utf8" }
+    new URL("../package.json", import.meta.url).pathname,
+    defaultEncodingOptions
   )
 );
 
