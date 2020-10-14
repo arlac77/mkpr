@@ -33,14 +33,14 @@
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^2.8.16",
-    "bitbucket-repository-provider": "^3.7.27",
+    "aggregation-repository-provider": "^2.8.17",
+    "bitbucket-repository-provider": "^3.7.28",
     "commander": "^6.1.0",
     "content-entry": "^2.5.1",
     "execa": "^4.0.3",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.17.20",
-    "local-repository-provider": "^7.0.2"
+    "github-repository-provider": "^7.17.21",
+    "local-repository-provider": "^7.0.3"
   },
   "devDependencies": {
     "ava": "^3.13.0",
