@@ -17,7 +17,7 @@ process.on("unhandledRejection", reason => console.error(reason));
 const { version, description } = JSON.parse(
   readFileSync(
     new URL("../package.json", import.meta.url).pathname,
-    defaultEncodingOptions
+    { encoding: "utf8" }
   )
 );
 
