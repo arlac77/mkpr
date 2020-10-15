@@ -1,10 +1,6 @@
 import test from "ava";
 import execa from "execa";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import { GithubProvider } from "github-repository-provider";
-
-const here = dirname(fileURLToPath(import.meta.url));
 
 const REPO = "arlac77/sync-test-repository";
 
@@ -35,7 +31,7 @@ test.serial("cli exec separator %", async t => {
   const p = await execa(
     "node",
     [
-      join(here, "..", "src", "mkpr-cli.mjs"),
+      new URL("../src/mkpr-cli.mjs", import.meta.url).pathname,
       "--entries",
       "package.json",
       "sed",
