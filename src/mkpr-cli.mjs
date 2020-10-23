@@ -162,9 +162,7 @@ ${exec} ${args}
           console.log(`${pr.identifier}: ${pr.title}`);
         } else {
           console.log(
-            branch +
-              ": " +
-              (numberOfEntries === 0 ? "no matching entries" : "nothing changed")
+            `${branch.identifier}: ${(numberOfEntries === 0 ? "no matching entries" : "nothing changed"}")
           );
         }
       }
