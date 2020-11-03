@@ -40,7 +40,7 @@
     "execa": "^4.1.0",
     "fast-json-patch": "^3.0.0-1",
     "github-repository-provider": "^7.17.32",
-    "local-repository-provider": "^7.0.13"
+    "local-repository-provider": "^7.0.15"
   },
   "devDependencies": {
     "ava": "^3.13.0",
