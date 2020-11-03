@@ -42,7 +42,7 @@ program
     "interpret exec as json patch to be applied to selected files"
   )
   .option("--message <commit message>", /.+/, "mkpr")
-  .option("--title <pr title>", /.+/, "mkpr")
+  .option("--title <pr title>")
   .command(
     "transformation with args % [branches...]",
     "command to be applied to the branches"
@@ -150,7 +150,7 @@ program
                 branch.repository,
                 program.prbranch
               ),
-              title: program.title,
+              title: program.title === undefined ? program.message : program.title,
               body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
