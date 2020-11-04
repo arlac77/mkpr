@@ -8,7 +8,7 @@
 
 create pull request by streaming content through a filter
 
-Currently support github and bitbucket hosted repositories.
+Currently supports github and bitbucket hosted repositories.
 
 % separates executable args from branch list
 
