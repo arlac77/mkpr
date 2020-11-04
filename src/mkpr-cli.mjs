@@ -9,16 +9,15 @@ import GithubProvider from "github-repository-provider";
 import BitbucketProvider from "bitbucket-repository-provider";
 import LocalProvider from "local-repository-provider";
 import AggregationProvider from "aggregation-repository-provider";
-import { generateBranchName } from "repository-provider";
+import { generateBranchName, asArray } from "repository-provider";
 
 process.on("uncaughtException", err => console.error(err));
 process.on("unhandledRejection", reason => console.error(reason));
 
 const { version, description } = JSON.parse(
-  readFileSync(
-    new URL("../package.json", import.meta.url).pathname,
-    { encoding: "utf8" }
-  )
+  readFileSync(new URL("../package.json", import.meta.url).pathname, {
+    encoding: "utf8"
+  })
 );
 
 const properties = {};
@@ -36,7 +35,11 @@ program
     })
   )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
-  .option("-e, --entries <entries>", "glob to select entries in the repo", "**/*")
+  .option(
+    "-e, --entries <entries>",
+    "glob to select entries in the repo",
+    "**/*"
+  )
   .option(
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
@@ -74,13 +77,13 @@ program
       }
 
       for await (const branch of aggregationProvider.branches(repos)) {
-        const toBeCommited = [];
-        let numberOfEntries = 0;
-
-        if (!branch || !branch.isWritable) {
+        if (!branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
         }
+
+        const toBeCommited = [];
+        let numberOfEntries = 0;
 
         for await (const entry of branch.entries(program.entries)) {
           numberOfEntries++;
@@ -150,7 +153,8 @@ program
                 branch.repository,
                 program.prbranch
               ),
-              title: program.title === undefined ? program.message : program.title,
+              title:
+                program.title === undefined ? program.message : program.title,
               body: `Applied mkpr on ${program.files}
 \`\`\`${program.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
@@ -162,7 +166,10 @@ ${exec} ${args}
           console.log(`${pr.identifier}: ${pr.title}`);
         } else {
           console.log(
-            `${branch.identifier}: ${numberOfEntries === 0 ? "no matching entries" : "nothing changed"}`);
+            `${branch.identifier}: ${
+              numberOfEntries === 0 ? "no matching entries" : "nothing changed"
+            }`
+          );
         }
       }
     } catch (err) {
@@ -171,7 +178,3 @@ ${exec} ${args}
     }
   })
   .parse(process.argv);
-
-function asArray(obj) {
-  return Array.isArray(obj) ? obj : obj === undefined ? [] : [obj];
-}
