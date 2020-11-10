@@ -145,8 +145,7 @@ program
 
         if (toBeCommited.length > 0) {
           const pr = await branch.commitIntoPullRequest(
-            program.message,
-            toBeCommited,
+            { message: program.message, entries: toBeCommited },
             {
               dry: program.dry,
               pullRequestBranch: await generateBranchName(
