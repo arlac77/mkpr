@@ -41,6 +41,10 @@ program
     "**/*"
   )
   .option(
+    "--regex",
+    "interpret exec regular expression"
+  )
+  .option(
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
   )
@@ -93,7 +97,13 @@ program
             const originalLastChar = originalString[originalString.length - 1];
 
             let modified, newContent;
-            if (program.jsonpatch) {
+            if (program.regex) {
+              const p = exec.split(/\//);
+              //console.log(p);
+              const regex = new RegExp(p[1], "g");
+              newContent = originalString.replace(regex,p[2]);
+            }
+            else if (program.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
               try {
