@@ -56,17 +56,17 @@ program
   )
   .action(async (commander, repos) => {
     try {
-      const logLevel = program.trace
-        ? "trace"
-        : program.debug
-        ? "debug"
-        : "info";
-
       const aggregationProvider = AggregationProvider.initialize(
         [GithubProvider, BitbucketProvider, LocalProvider],
         properties,
         process.env
       );
+
+      aggregationProvider.messageDestination = {
+        info(...args) { console.log(...args); },
+        warn(...args) { console.warn(...args); },
+        error(...args) { console.error(...args); }
+      };
 
       let args;
 
