@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^2.9.13",
-    "bitbucket-repository-provider": "^3.7.70",
+    "bitbucket-repository-provider": "^3.7.72",
     "commander": "^6.2.0",
     "content-entry": "^2.6.0",
     "execa": "^5.0.0",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.20.22",
-    "local-repository-provider": "^7.0.55"
+    "github-repository-provider": "^7.20.24",
+    "local-repository-provider": "^7.0.58"
   },
   "devDependencies": {
     "ava": "^3.13.0",
