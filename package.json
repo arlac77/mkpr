@@ -39,7 +39,7 @@
     "content-entry": "^2.6.0",
     "execa": "^5.0.0",
     "fast-json-patch": "^3.0.0-1",
-    "github-repository-provider": "^7.21.3",
+    "github-repository-provider": "^7.21.4",
     "local-repository-provider": "^7.0.64"
   },
   "devDependencies": {
