@@ -43,7 +43,7 @@
     "local-repository-provider": "^7.0.72"
   },
   "devDependencies": {
-    "ava": "^3.14.0",
+    "ava": "^3.15.0",
     "c8": "^7.4.0",
     "semantic-release": "^17.3.1"
   },
