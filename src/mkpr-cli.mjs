@@ -50,26 +50,22 @@ program
   )
   .option("--message <commit message>", /.+/, "mkpr")
   .option("--title <pr title>")
-  .command(
+  .arguments(
     "transformation with args % [branches...]",
     "command to be applied to the branches"
   )
-  .action(async (commander, repos) => {
+  .action(async (repos) => {
     try {
+      const options = program.opts();
       const aggregationProvider = AggregationProvider.initialize(
         [GithubProvider, BitbucketProvider, LocalProvider],
         properties,
         process.env
       );
 
-      aggregationProvider.messageDestination = {
-        info(...args) { console.log(...args); },
-        warn(...args) { console.warn(...args); },
-        error(...args) { console.error(...args); }
-      };
-
       let args;
 
+      
       let exec = repos.shift();
       const si = repos.indexOf("%");
 
@@ -89,7 +85,7 @@ program
         const toBeCommited = [];
         let numberOfEntries = 0;
 
-        for await (const entry of branch.entries(program.entries)) {
+        for await (const entry of branch.entries(options.entries)) {
           numberOfEntries++;
 
           if (entry.isBlob) {
@@ -97,13 +93,13 @@ program
             const originalLastChar = originalString[originalString.length - 1];
 
             let modified, newContent;
-            if (program.regex) {
+            if (options.regex) {
               const p = exec.split(/\//);
               //console.log(p);
               const regex = new RegExp(p[1], "g");
               newContent = originalString.replace(regex,p[2]);
             }
-            else if (program.jsonpatch) {
+            else if (options.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
               try {
@@ -155,17 +151,17 @@ program
 
         if (toBeCommited.length > 0) {
           const pr = await branch.commitIntoPullRequest(
-            { message: program.message, entries: toBeCommited },
+            { message: options.message, entries: toBeCommited },
             {
-              dry: program.dry,
+              dry: options.dry,
               pullRequestBranch: await generateBranchName(
                 branch.repository,
-                program.prbranch
+                options.prbranch
               ),
               title:
-                program.title === undefined ? program.message : program.title,
-              body: `Applied mkpr on ${program.files}
-\`\`\`${program.jsonpatch ? "json" : "sh"}
+              options.title === undefined ? options.message : options.title,
+              body: `Applied mkpr on ${options.files}
+\`\`\`${options.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
