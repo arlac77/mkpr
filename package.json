@@ -45,7 +45,7 @@
   "devDependencies": {
     "ava": "^3.15.0",
     "c8": "^7.6.0",
-    "semantic-release": "^17.4.0"
+    "semantic-release": "^17.4.1"
   },
   "engines": {
     "node": ">=14.16.0"
