@@ -5,9 +5,6 @@ import execa from "execa";
 import program from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
-import GithubProvider from "github-repository-provider";
-import BitbucketProvider from "bitbucket-repository-provider";
-import LocalProvider from "local-repository-provider";
 import AggregationProvider from "aggregation-repository-provider";
 import { generateBranchName, asArray } from "repository-provider";
 
@@ -55,7 +52,7 @@ program
     try {
       const options = program.opts();
       const aggregationProvider = await AggregationProvider.initialize(
-        [GithubProvider, BitbucketProvider, LocalProvider],
+        [],
         properties,
         process.env
       );

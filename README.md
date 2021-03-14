@@ -15,7 +15,8 @@ Currently supports github and bitbucket hosted repositories.
 % separates executable args from branch list
 
 ```shell
-export GH_TOKEN='token providing repositroy write access' # for github repos
+export AGGREGATION_FACTORY="github-repository-provider" # for github repos
+export GITHUB_TOKEN='token providing repositroy write access' # for github repos
 
 mkpr --entries '**/*.json' sed s/a/b/ % myGithubUser/myRepo
 ```
@@ -24,7 +25,8 @@ Create pull request for all package.json entries in the myuser/_ config _ repos 
 with the devDependency/config-expander set to ^10.3.2
 
 ```shell
-export GH_TOKEN='token providing repositroy write access' # for github repos
+export AGGREGATION_FACTORY="github-repository-provider" # for github repos
+export GITHUB_TOKEN='token providing repositroy write access' # for github repos
 
 mkpr --entries package.json --jsonpatch '[{"op":"replace","path":"/devDependencies/config-expander","value":"^10.3.2"}]' 'myuser/*config*'
 ```
