@@ -40,10 +40,7 @@ program
     "glob to select entries in the repo",
     "**/*"
   )
-  .option(
-    "--regex",
-    "interpret exec regular expression"
-  )
+  .option("--regex", "interpret exec as regular expression")
   .option(
     "--jsonpatch",
     "interpret exec as json patch to be applied to selected files"
@@ -54,10 +51,10 @@ program
     "transformation with args % [branches...]",
     "command to be applied to the branches"
   )
-  .action(async (repos) => {
+  .action(async repos => {
     try {
       const options = program.opts();
-      const aggregationProvider = AggregationProvider.initialize(
+      const aggregationProvider = await AggregationProvider.initialize(
         [GithubProvider, BitbucketProvider, LocalProvider],
         properties,
         process.env
@@ -65,7 +62,6 @@ program
 
       let args;
 
-      
       let exec = repos.shift();
       const si = repos.indexOf("%");
 
@@ -97,9 +93,8 @@ program
               const p = exec.split(/\//);
               //console.log(p);
               const regex = new RegExp(p[1], "g");
-              newContent = originalString.replace(regex,p[2]);
-            }
-            else if (options.jsonpatch) {
+              newContent = originalString.replace(regex, p[2]);
+            } else if (options.jsonpatch) {
               console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
               try {
@@ -159,7 +154,7 @@ program
                 options.prbranch
               ),
               title:
-              options.title === undefined ? options.message : options.title,
+                options.title === undefined ? options.message : options.title,
               body: `Applied mkpr on ${options.files}
 \`\`\`${options.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
