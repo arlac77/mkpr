@@ -25,6 +25,7 @@ program
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
+  .option("--list-providers", "list providers with options and exit")
   .option("-d, --define <key=value>", "set option", values =>
     asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
@@ -51,11 +52,23 @@ program
   .action(async repos => {
     try {
       const options = program.opts();
-      const aggregationProvider = await AggregationProvider.initialize(
+      const provider = await AggregationProvider.initialize(
         [],
         properties,
         process.env
       );
+
+      if (options.listProviders) {
+        console.log(
+          [
+            ...provider.providers.map(
+              p => `${p.name}: ${JSON.stringify(p.toJSON())}`
+            )
+          ].join("\n")
+        );
+
+        return;
+      }
 
       let args;
 
@@ -69,7 +82,7 @@ program
         [exec, ...args] = exec.split(/\s+/);
       }
 
-      for await (const branch of aggregationProvider.branches(repos)) {
+      for await (const branch of provider.branches(repos)) {
         if (!branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
