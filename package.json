@@ -13,8 +13,8 @@
   "description": "create pull request by pipeing repository content through filter like sed",
   "keywords": [
     "bitbucket",
-    "github",
     "gitea",
+    "github",
     "patch",
     "pull-request"
   ],
