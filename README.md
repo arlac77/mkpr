@@ -3,7 +3,7 @@
 [![minified size](https://badgen.net/bundlephobia/min/mkpr)](https://bundlephobia.com/result?p=mkpr)
 [![downloads](http://img.shields.io/npm/dm/mkpr.svg?style=flat-square)](https://npmjs.org/package/mkpr)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/mkpr.svg?style=flat-square)](https://github.com/arlac77/mkpr/issues)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fmkpr%2Fbadge&style=flat)](https://actions-badge.atrox.dev/arlac77/mkpr/goto)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fmkpr%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/mkpr/goto)
 [![Coverage Status](https://coveralls.io/repos/arlac77/mkpr/badge.svg)](https://coveralls.io/github/arlac77/mkpr)
 
 ## mkpr
