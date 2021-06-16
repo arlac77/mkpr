@@ -34,14 +34,14 @@
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m tests/*.mjs && c8 report -r lcov -o build/coverage --temp-directory build/tmp"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^3.2.12",
-    "bitbucket-repository-provider": "^3.8.3",
+    "aggregation-repository-provider": "^3.2.13",
+    "bitbucket-repository-provider": "^3.8.4",
     "commander": "^7.2.0",
     "content-entry": "^2.6.4",
     "execa": "^5.1.1",
     "fast-json-patch": "^3.0.0-1",
-    "gitea-repository-provider": "^1.16.8",
-    "github-repository-provider": "^7.22.6",
+    "gitea-repository-provider": "^1.16.9",
+    "github-repository-provider": "^7.22.7",
     "local-repository-provider": "^7.0.91"
   },
   "devDependencies": {
