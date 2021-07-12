@@ -27,7 +27,7 @@ async function prAssert(t, p) {
   }
 }
 
-test.serial("cli exec separator %", async t => {
+test("cli exec separator %", async t => {
   const p = await execa(
     "node",
     [
