@@ -44,11 +44,9 @@ program
   )
   .option("--message <commit message>", /.+/, "mkpr")
   .option("--title <pr title>")
-  .arguments(
-    "transformation with args % [branches...]",
-    "command to be applied to the branches"
-  )
-  .action(async repos => {
+  .argument("[transformation]", "transformation")
+  .argument("[branches...]", "branches whre to apply transformation")
+  .action(async (exec, branches) => {
     try {
       const options = program.opts();
       const provider = await AggregationProvider.initialize(
@@ -71,17 +69,16 @@ program
 
       let args;
 
-      let exec = repos.shift();
-      const si = repos.indexOf("%");
+      const si = branches.indexOf("%");
 
       if (si >= 0) {
-        args = repos.splice(0, si);
-        repos.shift();
+        args = branches.splice(0, si);
+        branches.shift();
       } else {
         [exec, ...args] = exec.split(/\s+/);
       }
 
-      for await (const branch of provider.branches(repos)) {
+      for await (const branch of provider.branches(branches)) {
         if (!branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
