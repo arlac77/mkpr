@@ -35,9 +35,9 @@
     "content-entry": "^2.6.7",
     "execa": "^5.1.1",
     "fast-json-patch": "^3.0.0-1",
-    "gitea-repository-provider": "^1.16.18",
-    "github-repository-provider": "^7.23.8",
-    "local-repository-provider": "^7.0.97"
+    "gitea-repository-provider": "^1.16.22",
+    "github-repository-provider": "^7.23.13",
+    "local-repository-provider": "^7.0.98"
   },
   "devDependencies": {
     "ava": "^3.15.0",
