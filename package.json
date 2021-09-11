@@ -31,7 +31,7 @@
   "dependencies": {
     "aggregation-repository-provider": "^3.2.44",
     "bitbucket-repository-provider": "^3.9.1",
-    "commander": "^8.1.0",
+    "commander": "^8.2.0",
     "content-entry": "^2.6.7",
     "execa": "^5.1.1",
     "fast-json-patch": "^3.0.0-1",
