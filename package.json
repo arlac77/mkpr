@@ -29,7 +29,7 @@
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m tests/*.mjs && c8 report -r lcov -o build/coverage --temp-directory build/tmp"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^3.2.49",
+    "aggregation-repository-provider": "^3.2.52",
     "bitbucket-repository-provider": "^3.9.3",
     "commander": "^8.2.0",
     "content-entry": "^2.7.0",
