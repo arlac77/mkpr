@@ -36,7 +36,7 @@
     "execa": "^5.1.1",
     "fast-json-patch": "^3.0.0-1",
     "gitea-repository-provider": "^1.16.32",
-    "github-repository-provider": "^7.23.26",
+    "github-repository-provider": "^7.23.27",
     "local-repository-provider": "^7.0.103"
   },
   "devDependencies": {
