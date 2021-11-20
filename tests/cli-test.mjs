@@ -1,5 +1,5 @@
 import test from "ava";
-import execa from "execa";
+import { execa } from "execa";
 import { GithubProvider } from "github-repository-provider";
 
 const REPO = "arlac77/sync-test-repository";
