@@ -91,7 +91,7 @@ program
           numberOfEntries++;
 
           if (entry.isBlob) {
-            const originalString = await entry.getString();
+            const originalString = await entry.string;
             const originalLastChar = originalString[originalString.length - 1];
 
             let modified, newContent;
