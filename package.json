@@ -40,7 +40,7 @@
     "local-repository-provider": "^7.0.111"
   },
   "devDependencies": {
-    "ava": "^3.15.0",
+    "ava": "^4.0.0",
     "c8": "^7.11.0",
     "semantic-release": "^18.0.1"
   },
