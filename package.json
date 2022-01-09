@@ -32,7 +32,7 @@
     "aggregation-repository-provider": "^4.0.15",
     "bitbucket-repository-provider": "^3.10.3",
     "commander": "^8.3.0",
-    "content-entry": "^3.0.2",
+    "content-entry": "^4.0.0",
     "execa": "^6.0.0",
     "fast-json-patch": "^3.0.0-1",
     "gitea-repository-provider": "^1.16.52",
