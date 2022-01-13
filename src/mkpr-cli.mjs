@@ -25,10 +25,10 @@ program
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
-  .option("-d, --define <key=value>", "set option", values =>
+  .option("-d, --define <...key=value>", "set option", values =>
     asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
-      setProperty(properties, k, v);
+      properties[k] = v;
     })
   )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
