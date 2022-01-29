@@ -2,7 +2,7 @@
 
 import { readFileSync } from "fs";
 import { execa } from "execa";
-import program from "commander";
+import { program } from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import AggregationProvider from "aggregation-repository-provider";
