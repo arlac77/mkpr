@@ -37,7 +37,7 @@
     "fast-json-patch": "^3.0.0-1",
     "gitea-repository-provider": "^1.16.67",
     "github-repository-provider": "^7.25.22",
-    "local-repository-provider": "^7.0.117"
+    "local-repository-provider": "^7.0.118"
   },
   "devDependencies": {
     "ava": "^4.0.1",
