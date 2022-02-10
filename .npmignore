@@ -8,3 +8,4 @@ doc
 .vscode
 rollup.config.js
 .github
+jsconfig.json
