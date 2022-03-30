@@ -8,8 +8,8 @@ import { StringContentEntry } from "content-entry";
 import AggregationProvider from "aggregation-repository-provider";
 import { generateBranchName, asArray } from "repository-provider";
 
-process.on("uncaughtException", err => console.error(err));
-process.on("unhandledRejection", reason => console.error(reason));
+process.on("uncaughtException", console.error);
+process.on("unhandledRejection", console.error);
 
 const { version, description } = JSON.parse(
   readFileSync(new URL("../package.json", import.meta.url).pathname, {
