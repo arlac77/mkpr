@@ -17,7 +17,14 @@ const { version, description } = JSON.parse(
   })
 );
 
-const properties = {};
+const properties = {
+  messageDestination: {
+    trace: console.info,
+    info: console.info,
+    warn: console.warn,
+    error: console.error
+  }
+};
 
 program
   .description(description)
