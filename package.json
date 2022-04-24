@@ -1,6 +1,6 @@
 {
   "name": "mkpr",
-  "version": "0.0.0-semantic-release",
+  "version": "2.1.125",
   "publishConfig": {
     "access": "public"
   },
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^5.0.1",
-    "bitbucket-repository-provider": "^4.1.1",
+    "bitbucket-repository-provider": "^4.1.2",
     "commander": "^9.2.0",
     "content-entry": "^5.0.0",
     "execa": "^6.1.0",
