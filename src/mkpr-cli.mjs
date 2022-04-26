@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
 import { execa } from "execa";
 import { program } from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
@@ -12,7 +13,7 @@ process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
 
 const { version, description } = JSON.parse(
-  readFileSync(new URL("../package.json", import.meta.url).pathname, {
+  readFileSync(fileURLToPath(new URL("../package.json", import.meta.url)), {
     encoding: "utf8"
   })
 );
