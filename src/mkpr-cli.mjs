@@ -87,6 +87,7 @@ program
       }
 
       for await (const branch of provider.branches(branches)) {
+        try {
         if (!branch.isWritable) {
           console.log(`Skip ${branch} as it is not writable`);
           continue;
@@ -186,8 +187,12 @@ ${exec} ${args}
           );
         }
       }
+      catch (err) {
+        console.error(err);	
+      }
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       process.exit(-1);
     }
   })
