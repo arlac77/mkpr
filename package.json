@@ -35,7 +35,7 @@
     "content-entry": "^5.0.0",
     "execa": "^6.1.0",
     "fast-json-patch": "^3.0.0-1",
-    "gitea-repository-provider": "^2.1.37",
+    "gitea-repository-provider": "^2.1.38",
     "github-repository-provider": "^7.26.26",
     "local-repository-provider": "^8.0.5"
   },
