@@ -170,7 +170,7 @@ program
               ),
               title:
                 options.title === undefined ? options.message : options.title,
-              body: `Applied mkpr on ${options.files}
+              body: `Applied mkpr on ${options.entries}
 \`\`\`${options.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
