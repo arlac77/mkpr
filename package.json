@@ -30,14 +30,14 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^5.2.22",
-    "bitbucket-repository-provider": "^4.1.20",
+    "bitbucket-repository-provider": "^4.1.21",
     "commander": "^9.2.0",
     "content-entry": "^5.0.1",
     "execa": "^6.1.0",
     "fast-json-patch": "^3.0.0-1",
-    "gitea-repository-provider": "^2.1.51",
-    "github-repository-provider": "^7.27.1",
-    "local-repository-provider": "^8.0.8"
+    "gitea-repository-provider": "^2.1.52",
+    "github-repository-provider": "^7.28.1",
+    "local-repository-provider": "^8.0.9"
   },
   "devDependencies": {
     "ava": "^4.2.0",
