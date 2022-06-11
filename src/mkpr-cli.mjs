@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "fs";
-import { fileURLToPath } from "url";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { homedir } from "node:os";
+import { fileURLToPath } from "node:url";
+import { mkdir } from "node:fs/promises";
 import { execa } from "execa";
 import { program } from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import AggregationProvider from "aggregation-repository-provider";
 import { generateBranchName, asArray } from "repository-provider";
+import { ETagCacheLevelDB } from "etag-cache-leveldb";
+import levelup from "levelup";
+import leveldown from "leveldown";
 
 process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
@@ -17,6 +23,13 @@ const { version, description } = JSON.parse(
     encoding: "utf8"
   })
 );
+
+async function createCache() {
+  const dir = join(homedir(), ".cache/repository-provider");
+  await mkdir(dir, { recursive: true });
+  const db = await levelup(leveldown(dir));
+  return new ETagCacheLevelDB(db);
+}
 
 const properties = {
   messageDestination: {
@@ -33,6 +46,7 @@ program
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
+  .option("--no-cache", "cache requests")
   .option("-d, --define <...key=value>", "set option", values =>
     asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);
@@ -75,6 +89,11 @@ program
         return;
       }
 
+      if (options.cache) {
+        const cache = await createCache();
+        provider._providers.forEach(p => (p.cache = cache));
+      }
+    
       let args;
 
       const si = branches.indexOf("%");
