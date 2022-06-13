@@ -33,8 +33,8 @@ async function createCache() {
 
 const properties = {
   messageDestination: {
-    trace: console.info,
-    info: console.info,
+    trace: () => {},
+    info: () => {},
     warn: console.warn,
     error: console.error
   }
@@ -87,6 +87,10 @@ program
         );
 
         return;
+      }
+
+      if(options.trace || options.debug) {
+        provider.messageDestination.trace = console.info;
       }
 
       if (options.cache) {
