@@ -33,7 +33,7 @@
     "bitbucket-repository-provider": "^4.2.10",
     "commander": "^9.3.0",
     "content-entry": "^5.0.6",
-    "etag-cache-leveldb": "^1.2.1",
+    "etag-cache-leveldb": "^1.2.2",
     "execa": "^6.1.0",
     "fast-json-patch": "^3.0.0-1",
     "gitea-repository-provider": "^2.2.11",
