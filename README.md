@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/mkpr.svg)](https://www.npmjs.com/package/mkpr)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![minified size](https://badgen.net/bundlephobia/min/mkpr)](https://bundlephobia.com/result?p=mkpr)
+[![Open Bundle](https://bundlejs.com/badge-light.svg)](https://bundlejs.com/?q=mkpr)
 [![downloads](http://img.shields.io/npm/dm/mkpr.svg?style=flat-square)](https://npmjs.org/package/mkpr)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/mkpr.svg?style=flat-square)](https://github.com/arlac77/mkpr/issues)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fmkpr%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/mkpr/goto)
