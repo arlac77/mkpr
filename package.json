@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^5.2.44",
-    "bitbucket-repository-provider": "^4.2.18",
+    "bitbucket-repository-provider": "^4.2.19",
     "commander": "^9.4.0",
     "content-entry": "^5.0.8",
     "etag-cache-leveldb": "^1.2.5",
