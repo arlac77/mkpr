@@ -70,12 +70,13 @@ program
   .argument("[branches...]", "branches whre to apply transformation")
   .action(async (exec, branches) => {
     try {
-      const options = program.opts();
       const provider = await AggregationProvider.initialize(
         [],
         properties,
         process.env
       );
+
+      const options = program.opts();
 
       if (options.listProviders) {
         console.log(
@@ -89,7 +90,7 @@ program
         return;
       }
 
-      if(options.trace || options.debug) {
+      if(options.trace || options.debug) {
         provider.messageDestination.trace = console.info;
       }
 
