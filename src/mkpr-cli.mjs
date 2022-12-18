@@ -1,19 +1,13 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
-import { mkdir } from "node:fs/promises";
 import { execa } from "execa";
 import { program } from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
-import AggregationProvider from "aggregation-repository-provider";
 import { generateBranchName, asArray } from "repository-provider";
-import { ETagCacheLevelDB } from "etag-cache-leveldb";
-import levelup from "levelup";
-import leveldown from "leveldown";
+import { initializeRepositoryProvider } from "./setup-provider.mjs";
 
 process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
@@ -23,13 +17,6 @@ const { version, description } = JSON.parse(
     encoding: "utf8"
   })
 );
-
-async function createCache() {
-  const dir = join(homedir(), ".cache/repository-provider");
-  await mkdir(dir, { recursive: true });
-  const db = await levelup(leveldown(dir));
-  return new ETagCacheLevelDB(db);
-}
 
 const properties = {
   messageDestination: {
@@ -70,35 +57,10 @@ program
   .argument("[branches...]", "branches whre to apply transformation")
   .action(async (exec, branches) => {
     try {
-      const provider = await AggregationProvider.initialize(
-        [],
-        properties,
-        process.env
+      const { provider, options } = await initializeRepositoryProvider(
+        program,
+        properties
       );
-
-      const options = program.opts();
-
-      if (options.listProviders) {
-        console.log(
-          [
-            ...provider.providers.map(
-              p => `${p.name}: ${JSON.stringify(p.toJSON())}`
-            )
-          ].join("\n")
-        );
-
-        return;
-      }
-
-      if(options.trace || options.debug) {
-        provider.messageDestination.trace = console.info;
-      }
-
-      if (options.cache) {
-        const cache = await createCache();
-        provider._providers.forEach(p => (p.cache = cache));
-      }
-    
       let args;
 
       const si = branches.indexOf("%");
@@ -112,108 +74,110 @@ program
 
       for await (const branch of provider.branches(branches)) {
         try {
-        if (!branch.isWritable) {
-          console.log(`Skip ${branch} as it is not writable`);
-          continue;
-        }
+          if (!branch.isWritable) {
+            console.log(`Skip ${branch} as it is not writable`);
+            continue;
+          }
 
-        const toBeCommited = [];
-        let numberOfEntries = 0;
+          const toBeCommited = [];
+          let numberOfEntries = 0;
 
-        for await (const entry of branch.entries(options.entries)) {
-          numberOfEntries++;
+          for await (const entry of branch.entries(options.entries)) {
+            numberOfEntries++;
 
-          if (entry.isBlob) {
-            const originalString = await entry.string;
-            const originalLastChar = originalString[originalString.length - 1];
+            if (entry.isBlob) {
+              const originalString = await entry.string;
+              const originalLastChar =
+                originalString[originalString.length - 1];
 
-            let modified, newContent;
-            if (options.regex) {
-              const p = exec.split(/\//);
-              //console.log(p);
-              const regex = new RegExp(p[1], "g");
-              newContent = originalString.replace(regex, p[2]);
-            } else if (options.jsonpatch) {
-              console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
+              let modified, newContent;
+              if (options.regex) {
+                const p = exec.split(/\//);
+                //console.log(p);
+                const regex = new RegExp(p[1], "g");
+                newContent = originalString.replace(regex, p[2]);
+              } else if (options.jsonpatch) {
+                console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
-              try {
-                const patch = asArray(JSON.parse(exec));
+                try {
+                  const patch = asArray(JSON.parse(exec));
 
-                newContent = JSON.stringify(
-                  applyPatch(JSON.parse(originalString), patch).newDocument,
-                  undefined,
-                  2
-                );
-              } catch (e) {
-                if (e.name === "TEST_OPERATION_FAILED") {
-                  console.log("Skip: patch test not fullfilled", e.operation);
-                } else {
-                  console.error(e);
+                  newContent = JSON.stringify(
+                    applyPatch(JSON.parse(originalString), patch).newDocument,
+                    undefined,
+                    2
+                  );
+                } catch (e) {
+                  if (e.name === "TEST_OPERATION_FAILED") {
+                    console.log("Skip: patch test not fullfilled", e.operation);
+                  } else {
+                    console.error(e);
+                  }
+                  continue;
                 }
-                continue;
+              } else {
+                console.log(
+                  `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
+                    entry.name
+                  }`
+                );
+
+                const e = await execa(exec, args, {
+                  input: originalString
+                });
+
+                newContent = e.stdout;
               }
-            } else {
-              console.log(
-                `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
-                  entry.name
-                }`
-              );
 
-              const e = await execa(exec, args, {
-                input: originalString
-              });
+              const lastChar = newContent[newContent.length - 1];
 
-              newContent = e.stdout;
-            }
+              // keep trailing newline
+              if (originalLastChar === "\n" && lastChar !== "\n") {
+                newContent += "\n";
+              }
 
-            const lastChar = newContent[newContent.length - 1];
+              modified = new StringContentEntry(entry.name, newContent);
 
-            // keep trailing newline
-            if (originalLastChar === "\n" && lastChar !== "\n") {
-              newContent += "\n";
-            }
+              const isEqual = await entry.equalsContent(modified);
 
-            modified = new StringContentEntry(entry.name, newContent);
-
-            const isEqual = await entry.equalsContent(modified);
-
-            if (!isEqual) {
-              toBeCommited.push(modified);
+              if (!isEqual) {
+                toBeCommited.push(modified);
+              }
             }
           }
-        }
 
-        if (toBeCommited.length > 0) {
-          const pr = await branch.commitIntoPullRequest(
-            { message: options.message, entries: toBeCommited },
-            {
-              dry: options.dry,
-              pullRequestBranch: await generateBranchName(
-                branch.repository,
-                options.prbranch
-              ),
-              title:
-                options.title === undefined ? options.message : options.title,
-              body: `Applied mkpr on ${options.entries}
+          if (toBeCommited.length > 0) {
+            const pr = await branch.commitIntoPullRequest(
+              { message: options.message, entries: toBeCommited },
+              {
+                dry: options.dry,
+                pullRequestBranch: await generateBranchName(
+                  branch.repository,
+                  options.prbranch
+                ),
+                title:
+                  options.title === undefined ? options.message : options.title,
+                body: `Applied mkpr on ${options.entries}
 \`\`\`${options.jsonpatch ? "json" : "sh"}
 ${exec} ${args}
 \`\`\`
 `
-            }
-          );
+              }
+            );
 
-          console.log(`${pr.identifier}: ${pr.title}`);
-        } else {
-          console.log(
-            `${branch.identifier}: ${
-              numberOfEntries === 0 ? "no matching entries" : "nothing changed"
-            }`
-          );
+            console.log(`${pr.identifier}: ${pr.title}`);
+          } else {
+            console.log(
+              `${branch.identifier}: ${
+                numberOfEntries === 0
+                  ? "no matching entries"
+                  : "nothing changed"
+              }`
+            );
+          }
+        } catch (err) {
+          console.error(err);
         }
-      }
-      catch (err) {
-        console.error(err);	
-      }
       }
     } catch (err) {
       console.error(err);
