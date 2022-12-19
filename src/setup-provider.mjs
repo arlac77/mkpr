@@ -22,9 +22,12 @@ export async function initializeRepositoryProvider(program, properties) {
 
   const options = program.opts();
 
-  if (options.trace || options.debug) {
-    provider.messageDestination.trace = console.info;
-  }
+  provider.messageDestination = {
+    trace: options.trace ? console.log : () => {},
+    info: console.log,
+    warn: console.warn,
+    error: console.error
+  };
 
   if (options.cache) {
     const cache = await createCache();
