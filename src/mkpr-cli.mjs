@@ -19,14 +19,7 @@ const { version, description } = JSON.parse(
   })
 );
 
-const properties = {
-  messageDestination: {
-    trace: () => {},
-    info: () => {},
-    warn: console.warn,
-    error: console.error
-  }
-};
+const properties = {};
 
 program
   .description(description)
@@ -94,7 +87,6 @@ program
               let modified, newContent;
               if (options.regex) {
                 const p = exec.split(/\//);
-                //console.log(p);
                 const regex = new RegExp(p[1], "g");
                 newContent = originalString.replace(regex, p[2]);
               } else if (options.jsonpatch) {
@@ -117,11 +109,11 @@ program
                   continue;
                 }
               } else {
-                console.log(
+                /*console.log(
                   `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
                     entry.name
                   }`
-                );
+                );*/
 
                 const e = await execa(exec, args, {
                   input: originalString
@@ -168,12 +160,14 @@ ${exec} ${args}
 
             console.log(chalk.green(`${pr.identifier}: ${pr.title}`));
           } else {
-            console.log(chalk.gray(
-              `${branch.identifier}: ${
-                numberOfEntries === 0
-                  ? "no matching entries"
-                  : "nothing changed"
-              }`)
+            console.log(
+              chalk.gray(
+                `${branch.identifier}: ${
+                  numberOfEntries === 0
+                    ? "no matching entries"
+                    : "nothing changed"
+                }`
+              )
             );
           }
         } catch (err) {
