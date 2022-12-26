@@ -8,6 +8,7 @@ import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import { generateBranchName, asArray } from "repository-provider";
 import { initializeRepositoryProvider } from "./setup-provider.mjs";
+import chalk from "chalk";
 
 process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
@@ -75,7 +76,7 @@ program
       for await (const branch of provider.branches(branches)) {
         try {
           if (!branch.isWritable) {
-            console.log(`Skip ${branch} as it is not writable`);
+            console.log(chalk.gray(`Skip ${branch} as it is not writable`));
             continue;
           }
 
@@ -165,14 +166,14 @@ ${exec} ${args}
               }
             );
 
-            console.log(`${pr.identifier}: ${pr.title}`);
+            console.log(chalk.green(`${pr.identifier}: ${pr.title}`));
           } else {
-            console.log(
+            console.log(chalk.gray(
               `${branch.identifier}: ${
                 numberOfEntries === 0
                   ? "no matching entries"
                   : "nothing changed"
-              }`
+              }`)
             );
           }
         } catch (err) {
