@@ -23,10 +23,8 @@ export async function initializeRepositoryProvider(program, properties) {
   const options = program.opts();
 
   provider.messageDestination = {
-    trace: options.trace ? console.log : () => {},
-    info: console.log,
-    warn: console.warn,
-    error: console.error
+    ...console,
+    trace: options.trace ? console.log : () => {}
   };
 
   if (options.cache) {
