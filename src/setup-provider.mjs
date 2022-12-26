@@ -27,10 +27,11 @@ export async function initializeRepositoryProvider(program, properties) {
     trace: options.trace ? console.log : () => {}
   };
 
+  let cache;
   if (options.cache) {
-    const cache = await createCache();
+    cache = await createCache();
     provider._providers.forEach(p => (p.cache = cache));
   }
 
-  return { provider, options };
+  return { provider, options, cache };
 }
