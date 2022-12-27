@@ -69,7 +69,7 @@ program
       for await (const branch of provider.branches(branches)) {
         try {
           if (!branch.isWritable) {
-            console.log(chalk.gray(`Skip ${branch} as it is not writable`));
+            console.log(chalk.gray(`${branch}: not writable - skip`));
             continue;
           }
 
