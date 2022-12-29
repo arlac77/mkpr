@@ -6,6 +6,9 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
+process.on("uncaughtException", console.error);
+process.on("unhandledRejection", console.error);
+
 async function createCache() {
   const dir = join(homedir(), ".cache/repository-provider");
   await mkdir(dir, { recursive: true });

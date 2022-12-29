@@ -10,9 +10,6 @@ import { generateBranchName, asArray } from "repository-provider";
 import { initializeRepositoryProvider } from "./setup-provider.mjs";
 import chalk from "chalk";
 
-process.on("uncaughtException", console.error);
-process.on("unhandledRejection", console.error);
-
 const { version, description } = JSON.parse(
   readFileSync(fileURLToPath(new URL("../package.json", import.meta.url)), {
     encoding: "utf8"
