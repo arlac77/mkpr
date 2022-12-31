@@ -41,7 +41,8 @@
     "github-repository-provider": "^7.33.18",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^8.1.5"
+    "local-repository-provider": "^8.1.5",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "ava": "^5.1.0",
