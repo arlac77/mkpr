@@ -7,7 +7,7 @@ import { program } from "commander";
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import { generateBranchName, asArray } from "repository-provider";
-import { initializeRepositoryProvider } from "./setup-provider.mjs";
+import { initializeRepositoryProvider, initializeCommandLine } from "./setup-provider.mjs";
 import chalk from "chalk";
 
 const { version, description } = JSON.parse(
@@ -18,13 +18,14 @@ const { version, description } = JSON.parse(
 
 const properties = {};
 
+initializeCommandLine(program);
+
 program
   .description(description)
   .version(version)
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
-  .option("--no-cache", "cache requests")
   .option("-d, --define <...key=value>", "set option", values =>
     asArray(values).forEach(value => {
       const [k, v] = value.split(/=/);

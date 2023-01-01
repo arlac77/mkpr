@@ -44,3 +44,9 @@ export async function initializeRepositoryProvider(program, properties) {
 
   return { provider, options, cache };
 }
+
+
+export function initializeCommandLine(program)
+{
+  program.option("--no-cache", "cache requests");
+}
