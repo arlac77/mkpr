@@ -29,7 +29,7 @@
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m tests/*-ava.mjs tests/*-ava-node.mjs && c8 report -r lcov -o build/coverage --temp-directory build/tmp"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^5.3.15",
+    "aggregation-repository-provider": "^5.3.16",
     "bitbucket-repository-provider": "^4.4.23",
     "chalk": "^5.2.0",
     "commander": "^9.4.1",
@@ -37,7 +37,7 @@
     "etag-cache-leveldb": "^1.4.1",
     "execa": "^6.1.0",
     "fast-json-patch": "^3.0.0-1",
-    "gitea-repository-provider": "^2.4.22",
+    "gitea-repository-provider": "^2.4.23",
     "github-repository-provider": "^7.33.23",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
