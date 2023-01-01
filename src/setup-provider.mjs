@@ -17,10 +17,9 @@ async function createCache() {
 }
 
 export async function initializeRepositoryProvider(program, properties) {
-
-  if(!globalThis.fetch) {
-     const module = await import("node-fetch");
-     globalThis.fetch = module.default;
+  if (!globalThis.fetch) {
+    const module = await import("node-fetch");
+    globalThis.fetch = module.default;
   }
 
   const provider = await AggregationProvider.initialize(
@@ -45,8 +44,8 @@ export async function initializeRepositoryProvider(program, properties) {
   return { provider, options, cache };
 }
 
-
-export function initializeCommandLine(program)
-{
-  program.option("--no-cache", "cache requests");
+export function initializeCommandLine(program) {
+  program
+    .option("--no-cache", "cache requests")
+    .option("--statistics", "show cache statistics");
 }
