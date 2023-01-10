@@ -5,6 +5,7 @@ import leveldown from "leveldown";
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
+import { Agent } from "node:https";
 
 process.on("uncaughtException", console.error);
 process.on("unhandledRejection", console.error);
@@ -15,6 +16,8 @@ async function createCache() {
   const db = await levelup(leveldown(dir));
   return new ETagCacheLevelDB(db);
 }
+
+const httpsAgent = new Agent({ keepAlive: true });
 
 export async function initializeRepositoryProvider(program, properties) {
   if (!globalThis.fetch) {
@@ -40,6 +43,10 @@ export async function initializeRepositoryProvider(program, properties) {
     cache = await createCache();
     provider._providers.forEach(p => (p.cache = cache));
   }
+
+  provider._providers.forEach(
+    p => (p.agent = url => httpsAgent )
+  );
 
   return { provider, options, cache };
 }
