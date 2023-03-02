@@ -107,12 +107,6 @@ program
                   continue;
                 }
               } else {
-                /*console.log(
-                  `${exec} ${args.map(x => `'${x}'`).join(" ")} ${branch} ${
-                    entry.name
-                  }`
-                );*/
-
                 const e = await execa(exec, args, {
                   input: originalString
                 });
