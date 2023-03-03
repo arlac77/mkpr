@@ -78,7 +78,9 @@ program
             await p;
           }
         } else {
-          console.log(chalk.gray(`${branch}: not writable - skip`));
+          if(options.debug || options.trace) {
+            console.log(chalk.gray(`${branch}: not writable - skip`));
+          }
         }
       }
 
