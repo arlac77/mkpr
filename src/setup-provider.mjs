@@ -20,11 +20,6 @@ async function createCache() {
 const httpsAgent = new Agent({ keepAlive: true });
 
 export async function initializeRepositoryProvider(program, properties) {
-  if (!globalThis.fetch) {
-    const module = await import("node-fetch");
-    globalThis.fetch = module.default;
-  }
-
   const provider = await AggregationProvider.initialize(
     [],
     properties,
