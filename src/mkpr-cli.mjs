@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { execa } from "execa";
 import { program } from "commander";
+import chalk from "chalk";
+import pkg from "../package.json" assert { type: "json" };
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import { generateBranchName, asArray } from "repository-provider";
@@ -11,21 +11,14 @@ import {
   initializeRepositoryProvider,
   initializeCommandLine
 } from "./setup-provider.mjs";
-import chalk from "chalk";
-
-const { version, description } = JSON.parse(
-  readFileSync(fileURLToPath(new URL("../package.json", import.meta.url)), {
-    encoding: "utf8"
-  })
-);
 
 const properties = {};
 
 initializeCommandLine(program);
 
 program
-  .description(description)
-  .version(version)
+  .description(pkg.description)
+  .version(pkg.version)
   .option("--dry", "do not create branch/pull request")
   .option("--trace", "log level trace")
   .option("--debug", "log level debug")
