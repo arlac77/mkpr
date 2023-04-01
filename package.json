@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^5.3.23",
-    "bitbucket-repository-provider": "^5.0.4",
+    "bitbucket-repository-provider": "^5.0.5",
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
     "content-entry": "^6.0.0",
