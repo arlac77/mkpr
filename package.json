@@ -31,7 +31,7 @@
     "aggregation-repository-provider": "^5.3.24",
     "bitbucket-repository-provider": "^5.0.7",
     "chalk": "^5.2.0",
-    "commander": "^10.0.0",
+    "commander": "^10.0.1",
     "content-entry": "^6.0.0",
     "etag-cache-leveldb": "^2.0.1",
     "execa": "^7.1.1",
