@@ -1,5 +1,4 @@
 #!/usr/bin/env -S node --no-warnings
-
 import { execa } from "execa";
 import { program } from "commander";
 import chalk from "chalk";
