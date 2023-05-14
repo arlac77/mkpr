@@ -40,7 +40,8 @@
     "github-repository-provider": "^8.0.15",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^8.1.14"
+    "local-repository-provider": "^8.1.14",
+    "repository-provider-cli-support": "^1.0.0"
   },
   "devDependencies": {
     "ava": "^5.2.0",

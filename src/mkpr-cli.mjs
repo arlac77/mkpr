@@ -9,7 +9,7 @@ import { generateBranchName, asArray } from "repository-provider";
 import {
   initializeRepositoryProvider,
   initializeCommandLine
-} from "./setup-provider.mjs";
+} from "repository-provider-cli-support";
 
 const properties = {};
 
