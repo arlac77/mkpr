@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^5.3.30",
-    "bitbucket-repository-provider": "^5.1.9",
+    "bitbucket-repository-provider": "^5.1.10",
     "chalk": "^5.3.0",
     "commander": "^11.0.0",
     "content-entry": "^6.0.0",
@@ -40,7 +40,7 @@
     "github-repository-provider": "^8.0.20",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^8.1.16",
+    "local-repository-provider": "^8.1.17",
     "repository-provider-cli-support": "^1.0.3"
   },
   "devDependencies": {
