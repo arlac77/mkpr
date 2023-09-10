@@ -70,7 +70,7 @@ program
             await p;
           }
         } else {
-          if(options.debug || options.trace) {
+          if (options.debug || options.trace) {
             console.log(chalk.gray(`${branch}: not writable - skip`));
           }
         }
