@@ -30,7 +30,7 @@ program
   )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
   .option(
-    "-e, --entries <entries>",
+    "--entries <entries>",
     "glob to select entries in the repo",
     "**/*"
   )
