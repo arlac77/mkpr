@@ -44,7 +44,7 @@
     "repository-provider-cli-support": "^1.0.8"
   },
   "devDependencies": {
-    "ava": "^6.1.0",
+    "ava": "^6.1.1",
     "c8": "^9.1.0",
     "semantic-release": "^23.0.0"
   },
