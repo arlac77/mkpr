@@ -2,7 +2,8 @@
   "name": "mkpr",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "description": "create pull request by pipeing repository content through filter like sed",
   "keywords": [
