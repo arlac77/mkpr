@@ -24,7 +24,7 @@ export GITHUB_TOKEN='token providing repositroy write access' # for github repos
 mkpr --entries '**/*.json' sed s/a/b/ % myGithubUser/myRepo
 ```
 
-Create pull request for all package.json entries in the myuser/_ config _ repos of github
+Create pull request for all package.json entries in the myuser/\_ config \_ repos of github
 with the devDependency/config-expander set to ^10.3.2
 
 ```shell
