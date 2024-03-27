@@ -1,4 +1,4 @@
-#!/usr/bin/env -S node --no-warnings
+#!/usr/bin/env -S node --no-warnings --title mkpr
 import { execa } from "execa";
 import { program } from "commander";
 import chalk from "chalk";
