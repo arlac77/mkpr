@@ -102,7 +102,7 @@ async function patch(branch, exec, args, options) {
         if (options.regex) {
           const p = exec.split(/\//);
           const regex = new RegExp(p[1], "g");
-          newContent = originalString.replace(regex, p[2]);
+          newContent = originalString.replaceAll(regex, p[2]);
         } else if (options.jsonpatch) {
           console.log(`jsonpatch ${exec} ${branch} ${entry.name}`);
 
