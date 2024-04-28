@@ -2,7 +2,7 @@
 import { execa } from "execa";
 import { program } from "commander";
 import chalk from "chalk";
-import pkg from "../package.json" assert { type: "json" };
+import pkg from "../package.json" with { type: "json" };
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
 import { generateBranchName, asArray } from "repository-provider";
