@@ -39,7 +39,7 @@ jobs:
           path-to-lcov: build/coverage/lcov.info
           parallel: true
         continue-on-error: true
-      - name: checkout
+      - name: install
         run: npm ci
   release:
     needs:
@@ -59,7 +59,7 @@ jobs:
           node-version: 22.6.0
           cache: npm
           cache-dependency-path: package-lock.json
-      - name: checkout
+      - name: install
         run: npm ci
       - name: release
         run: npx semantic-release
