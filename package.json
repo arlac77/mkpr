@@ -38,7 +38,7 @@
     "commander": "^12.1.0",
     "content-entry": "^11.1.1",
     "etag-cache-leveldb": "^2.1.7",
-    "execa": "^9.4.1",
+    "execa": "^9.5.0",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.2.5",
     "github-repository-provider": "^9.0.21",
