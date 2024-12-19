@@ -19,7 +19,7 @@
       "email": "markus.felten@gmx.de"
     }
   ],
-  "license": "BSD-2-Clause",
+  "license": "0BSD",
   "bin": {
     "mkpr": "src/mkpr-cli.mjs"
   },
