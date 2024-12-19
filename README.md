@@ -1,5 +1,5 @@
 [![npm](https://img.shields.io/npm/v/mkpr.svg)](https://www.npmjs.com/package/mkpr)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://spdx.org/licenses/0BSD.html)
 [![bundlejs](https://deno.bundlejs.com/?q=mkpr\&badge=detailed)](https://bundlejs.com/?q=mkpr)
 [![downloads](http://img.shields.io/npm/dm/mkpr.svg?style=flat-square)](https://npmjs.org/package/mkpr)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/mkpr.svg?style=flat-square)](https://github.com/arlac77/mkpr/issues)
