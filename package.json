@@ -37,7 +37,7 @@
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
     "content-entry": "^12.0.0",
-    "etag-cache-leveldb": "^2.1.7",
+    "etag-cache-leveldb": "^2.1.8",
     "execa": "^9.5.2",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.2.5",
