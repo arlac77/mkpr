@@ -33,19 +33,19 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^7.0.8",
-    "bitbucket-repository-provider": "^6.0.32",
+    "bitbucket-repository-provider": "^6.0.33",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
     "content-entry": "^13.0.2",
     "etag-cache-leveldb": "^2.1.13",
     "execa": "^9.5.2",
     "fast-json-patch": "^3.1.1",
-    "gitea-repository-provider": "^4.2.8",
-    "github-repository-provider": "^9.1.5",
+    "gitea-repository-provider": "^4.2.10",
+    "github-repository-provider": "^9.1.6",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^9.1.0",
-    "repository-provider-cli-support": "^2.2.17"
+    "local-repository-provider": "^9.1.1",
+    "repository-provider-cli-support": "^2.2.18"
   },
   "devDependencies": {
     "ava": "^6.3.0",
