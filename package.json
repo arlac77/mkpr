@@ -41,7 +41,7 @@
     "execa": "^9.5.2",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.2.8",
-    "github-repository-provider": "^9.1.4",
+    "github-repository-provider": "^9.1.5",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^9.0.1",
