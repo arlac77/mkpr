@@ -44,7 +44,7 @@
     "github-repository-provider": "^9.1.5",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^9.0.1",
+    "local-repository-provider": "^9.1.0",
     "repository-provider-cli-support": "^2.2.17"
   },
   "devDependencies": {
