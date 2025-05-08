@@ -137,7 +137,7 @@ async function patch(branch, exec, args, options) {
           newContent += "\n";
         }
 
-        modified = new StringContentEntry(entry.name, newContent);
+        modified = new StringContentEntry(entry.name, undefined, newContent);
 
         if (!(await entry.equalsContent(modified))) {
           toBeCommited.push(modified);
