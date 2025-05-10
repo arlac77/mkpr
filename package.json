@@ -40,7 +40,7 @@
     "etag-cache-leveldb": "^2.1.14",
     "execa": "^9.5.3",
     "fast-json-patch": "^3.1.1",
-    "gitea-repository-provider": "^4.2.17",
+    "gitea-repository-provider": "^4.2.18",
     "github-repository-provider": "^9.2.7",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
