@@ -32,7 +32,7 @@
     "lint:docs": "documentation lint ./src**/*.mjs"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^7.0.16",
+    "aggregation-repository-provider": "^7.0.17",
     "bitbucket-repository-provider": "^6.1.12",
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
