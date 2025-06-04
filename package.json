@@ -45,7 +45,7 @@
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^9.1.12",
-    "repository-provider-cli-support": "^2.2.24"
+    "repository-provider-cli-support": "^2.2.26"
   },
   "devDependencies": {
     "ava": "^6.3.0",
