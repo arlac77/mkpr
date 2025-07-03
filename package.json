@@ -32,7 +32,7 @@
     "lint:docs": "documentation lint ./src**/*.mjs"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^7.0.26",
+    "aggregation-repository-provider": "^7.0.27",
     "bitbucket-repository-provider": "^6.1.17",
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
@@ -45,7 +45,7 @@
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^9.1.12",
-    "repository-provider-cli-support": "^2.2.33"
+    "repository-provider-cli-support": "^2.2.34"
   },
   "devDependencies": {
     "ava": "^6.4.0",
