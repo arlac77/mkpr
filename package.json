@@ -33,11 +33,11 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^7.0.29",
-    "bitbucket-repository-provider": "^6.1.17",
+    "bitbucket-repository-provider": "^6.1.18",
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
     "content-entry": "^14.2.3",
-    "etag-cache-leveldb": "^2.1.14",
+    "etag-cache-leveldb": "^2.1.15",
     "execa": "^9.6.0",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.2.19",
