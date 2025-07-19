@@ -32,8 +32,8 @@
     "lint:docs": "documentation lint ./src**/*.mjs"
   },
   "dependencies": {
-    "aggregation-repository-provider": "^7.0.30",
-    "bitbucket-repository-provider": "^6.1.18",
+    "aggregation-repository-provider": "^7.0.31",
+    "bitbucket-repository-provider": "^6.1.19",
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
     "content-entry": "^14.2.3",
@@ -41,10 +41,10 @@
     "execa": "^9.6.0",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.2.19",
-    "github-repository-provider": "^9.2.21",
+    "github-repository-provider": "^9.2.22",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
-    "local-repository-provider": "^9.1.12",
+    "local-repository-provider": "^9.1.13",
     "repository-provider-cli-support": "^2.2.34"
   },
   "devDependencies": {
