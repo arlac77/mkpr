@@ -41,11 +41,11 @@
     "execa": "^9.6.0",
     "fast-json-patch": "^3.1.1",
     "gitea-repository-provider": "^4.3.2",
-    "github-repository-provider": "^9.2.25",
+    "github-repository-provider": "^9.2.26",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^9.1.14",
-    "repository-provider-cli-support": "^2.2.36"
+    "repository-provider-cli-support": "^2.2.37"
   },
   "devDependencies": {
     "ava": "^6.4.1",
