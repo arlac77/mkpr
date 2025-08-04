@@ -34,7 +34,7 @@
   "dependencies": {
     "aggregation-repository-provider": "^7.0.37",
     "bitbucket-repository-provider": "^6.2.7",
-    "chalk": "^5.4.1",
+    "chalk": "^5.5.0",
     "commander": "^14.0.0",
     "content-entry": "^14.2.3",
     "etag-cache-leveldb": "^2.1.15",
