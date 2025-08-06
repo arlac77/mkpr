@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "aggregation-repository-provider": "^7.0.38",
-    "bitbucket-repository-provider": "^6.2.7",
+    "bitbucket-repository-provider": "^6.2.8",
     "chalk": "^5.5.0",
     "commander": "^14.0.0",
     "content-entry": "^14.2.4",
