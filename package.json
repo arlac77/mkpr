@@ -46,7 +46,7 @@
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^9.1.17",
-    "repository-provider-cli-support": "^2.2.41"
+    "repository-provider-cli-support": "^2.2.43"
   },
   "devDependencies": {
     "ava": "^6.4.1",
@@ -55,7 +55,7 @@
     "semantic-release": "^24.2.9"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=22.19.5"
   },
   "repository": {
     "type": "git",
