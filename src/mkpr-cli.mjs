@@ -1,7 +1,7 @@
 #!/usr/bin/env -S node --no-warnings --title mkpr
 import { execa } from "execa";
 import { program } from "commander";
-import chalk from "chalk";
+import { styleText } from "node:util";
 import pkg from "../package.json" with { type: "json" };
 import { applyPatch } from "fast-json-patch/index.mjs";
 import { StringContentEntry } from "content-entry";
@@ -29,11 +29,7 @@ program
     })
   )
   .option("--prbranch <name>", "name of the pull request branch", "mkpr/*")
-  .option(
-    "--entries <entries>",
-    "glob to select entries in the repo",
-    "**/*"
-  )
+  .option("--entries <entries>", "glob to select entries in the repo", "**/*")
   .option("--regex", "interpret exec as regular expression")
   .option(
     "--jsonpatch",
@@ -71,7 +67,7 @@ program
           }
         } else {
           if (options.debug || options.trace) {
-            console.log(chalk.gray(`${branch}: not writable - skip`));
+            console.log(styleText("gray", `${branch}: not writable - skip`));
           }
         }
       }
@@ -163,10 +159,11 @@ ${exec} ${args}
         }
       );
 
-      console.log(chalk.green(`${pr.identifier}: ${pr.title}`));
+      console.log(styleText("green", `${pr.identifier}: ${pr.title}`));
     } else {
       console.log(
-        chalk.gray(
+        styleText(
+          "gray",
           `${branch.identifier}: ${
             numberOfEntries === 0 ? "no matching entries" : "nothing changed"
           }`
