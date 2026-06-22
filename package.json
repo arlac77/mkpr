@@ -40,12 +40,12 @@
     "etag-cache-leveldb": "^2.1.17",
     "execa": "^9.6.0",
     "fast-json-patch": "^3.1.1",
-    "gitea-repository-provider": "^5.0.10",
-    "github-repository-provider": "^10.0.40",
+    "gitea-repository-provider": "^5.0.11",
+    "github-repository-provider": "^10.0.41",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "local-repository-provider": "^10.0.0",
-    "repository-provider-cli-support": "^3.0.14"
+    "repository-provider-cli-support": "^3.0.15"
   },
   "devDependencies": {
     "ava": "^8.0.1",
