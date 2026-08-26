@@ -36,7 +36,7 @@
     "aggregation-repository-provider": "^7.0.52",
     "bitbucket-repository-provider": "^7.0.29",
     "commander": "^15.0.0",
-    "content-entry": "^15.0.0",
+    "content-entry": "^15.0.2",
     "etag-cache-leveldb": "^2.1.17",
     "execa": "^10.0.1",
     "fast-json-patch": "^3.1.1",
